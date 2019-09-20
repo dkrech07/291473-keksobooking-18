@@ -21,8 +21,9 @@ var getRandomDouble = function (min, max) {
 };
 
 var getRandomList = function (array) {
-  array.length = getRandom(array.length) + 1;
-  return array;
+  var newArray = Array.from(array);
+  newArray.length = getRandom(array.length) + 1;
+  return newArray;
 };
 
 var createAds = function (ads) {
