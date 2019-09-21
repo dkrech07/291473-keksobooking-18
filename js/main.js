@@ -23,6 +23,7 @@ var getRandomDouble = function (min, max) {
 var getRandomList = function (array) {
   var newArray = Array.from(array);
   newArray.length = getRandom(array.length) + 1;
+
   return newArray;
 };
 
@@ -55,36 +56,37 @@ var createAds = function (ads) {
     };
     adsArray.push(advert);
   }
+
   return adsArray;
 };
 
-var mapActivate = function(){
+var mapActivate = function () {
   var map = document.querySelector('.map');
   map.classList.remove('map--faded');
 };
-mapActivate();
 
 var renderPin = function (advertisement) {
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-    var pinElement = pinTemplate.cloneNode(true);
+  var pinElement = pinTemplate.cloneNode(true);
 
-    pinElement.style.left = advertisement.location.x - (PIN_WIDTH / 2) + 'px';
-    pinElement.style.top = advertisement.location.y - PIN_HEIGHT + 'px';
-    pinElement.querySelector('img').src = advertisement.author.avatar;
-    pinElement.querySelector('img').alt = advertisement.offer.title;
+  pinElement.style.left = advertisement.location.x - (PIN_WIDTH / 2) + 'px';
+  pinElement.style.top = advertisement.location.y - PIN_HEIGHT + 'px';
+  pinElement.querySelector('img').src = advertisement.author.avatar;
+  pinElement.querySelector('img').alt = advertisement.offer.title;
 
-  return pinElement
+  return pinElement;
 };
 
 var drawPins = function (adsList) {
-    var mapPins = document.querySelector('.map__pins');
-    var fragment = document.createDocumentFragment();
+  var mapPins = document.querySelector('.map__pins');
+  var fragment = document.createDocumentFragment();
 
-    for(var i = 0; i < adsList.length; i++) {
-      fragment.appendChild(renderPin(adsList[i]));
-    }
+  for (var i = 0; i < adsList.length; i++) {
+    fragment.appendChild(renderPin(adsList[i]));
+  }
 
-  return  mapPins.appendChild(fragment);
-}
+  return mapPins.appendChild(fragment);
+};
 
+mapActivate();
 drawPins(createAds(ADS_NUMBER));
