@@ -19,10 +19,12 @@ var TYPES_HOUSING_RU = {
 };
 
 var getRandom = function (number) {
+
   return Math.floor(Math.random() * number);
 };
 
 var getRandomDouble = function (min, max) {
+
   return Math.floor(Math.random() * (max - min) + min);
 };
 
@@ -122,6 +124,7 @@ var renderPhotos = function (photos) {
     element.src = photos[i];
     fragment.appendChild(element);
   }
+
   return fragment;
 };
 
