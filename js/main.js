@@ -28,7 +28,6 @@ var NUMBERS_SEATS = {
 };
 
 var mark = document.querySelector('.map__pin--main');
-var isActive = false;
 var inputRoomNumber = document.querySelector('#room_number');
 var inputSeatsNumber = document.querySelector('#capacity');
 var inputSeatsOption = inputSeatsNumber.querySelectorAll('option');
@@ -201,31 +200,30 @@ var drawMarkPosition = function (width, height) {
 drawMarkPosition(MARK_WIDTH / 2, MARK_WIDTH / 2);
 
 var markClickHandler = function () {
-  if (isActive === false) {
-    mapActivate();
+  mapActivate();
 
-    disableInput('fieldset', false);
-    disableInput('select', false);
-    disableInput('input', false);
+  disableInput('fieldset', false);
+  disableInput('select', false);
+  disableInput('input', false);
 
-    drawPins(createAds(ADS_NUMBER));
-    drawMarkPosition(MARK_WIDTH / 2, MARK_HEIGHT);
+  drawPins(createAds(ADS_NUMBER));
+  drawMarkPosition(MARK_WIDTH / 2, MARK_HEIGHT);
 
-    drawMapCard(0);
+  drawMapCard(0);
 
-    mark.removeEventListener('mousedown', markClickHandler);
+  mark.removeEventListener('mousedown', markClickHandler);
+  mark.removeEventListener('keydown', enterPressHandler);
+};
 
-    isActive = true;
+var enterPressHandler = function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    markClickHandler();
   }
 };
 
 mark.addEventListener('mousedown', markClickHandler);
 
-mark.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    markClickHandler();
-  }
-});
+mark.addEventListener('keydown', enterPressHandler);
 
 var roomNumberClickHandler = function () {
   for (var i = 0; i < inputSeatsOption.length; i++) {
