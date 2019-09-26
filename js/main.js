@@ -169,6 +169,11 @@ var drawMapCard = function (adsNumber) {
   return document.querySelector('.map .map__filters-container').before(fragment);
 };
 
+var activateAdsForm = function () {
+  var adsForm = document.querySelector('.ad-form');
+  adsForm.classList.remove('ad-form--disabled');
+};
+
 var disableInput = function (input, status) {
   var inputs = document.querySelectorAll(input);
   for (var i = 0; i < inputs.length; i++) {
@@ -201,6 +206,8 @@ drawMarkPosition(MARK_WIDTH / 2, MARK_WIDTH / 2);
 
 var markClickHandler = function () {
   mapActivate();
+
+  activateAdsForm();
 
   disableInput('fieldset', false);
   disableInput('select', false);
