@@ -17,6 +17,8 @@ var TYPES_HOUSING_RU = {
   house: 'Дом',
   bungalo: 'Бунгало'
 };
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
 var getRandom = function (number) {
 
@@ -156,8 +158,61 @@ var drawMapCard = function (adsNumber) {
   return document.querySelector('.map .map__filters-container').before(fragment);
 };
 
-mapActivate();
+// mapActivate();
+//
+// drawPins(createAds(ADS_NUMBER));
+//
+// drawMapCard(0);
 
-drawPins(createAds(ADS_NUMBER));
+var disableInput = function (input, status) {
+  var inputs = document.querySelectorAll(input);
+  for (var i = 0; i < inputs.length; i++) {
+    if (status) {
+      inputs[i].disabled = true;
+    } else {
+      inputs[i].disabled = false;
+    }
+  }
+  return inputs;
+};
 
-drawMapCard(0);
+disableInput('fieldset', true);
+disableInput('select', true);
+disableInput('input', true);
+
+var mark = document.querySelector('.map__pin--main');
+
+var getMarkPosition = function () {
+  return {
+    x: mark.offsetLeft,
+    y: mark.offsetTop
+  }
+};
+
+var drawMarkPosition = function (width, height) {
+  var inputAddress = document.querySelector('#address');
+  inputAddress.value = 'По оси X: ' + (getMarkPosition().x - width) + ', по оси Y: ' + (getMarkPosition().y - height);
+};
+
+drawMarkPosition(0, 0);
+
+var markClickHandler = function () {
+  mapActivate();
+
+  disableInput('fieldset', true);
+  disableInput('select', true);
+  disableInput('input', true);
+
+  drawPins(createAds(ADS_NUMBER));
+  drawMarkPosition(31, 84);
+
+  mark.removeEventListener('click', markClickHandler);
+};
+
+mark.addEventListener('click', markClickHandler);
+
+mark.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE){
+    markClickHandler();
+  }
+});
