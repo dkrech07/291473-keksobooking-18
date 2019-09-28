@@ -266,16 +266,17 @@ var closePopUpAuto = function () {
     if (popUp) {
       map.removeChild(popUp);
     }
-
 };
 
 var closePopUp = function () {
-  var map = document.querySelector('.map');
-  var popUp = document.querySelector('.map__card');
-  var closeButton = popUp.querySelector('.popup__close');
-  closeButton.addEventListener('click', closePopUp);
+    var map = document.querySelector('.map');
+    var popUp = document.querySelector('.map__card');
+    var closeButton = popUp.querySelector('.popup__close');
+    closeButton.addEventListener('click', function () {
+      map.removeChild(popUp);
+      addListen();
+    });
 };
-
 
   var openPopUp = function (evt, key, handler) {
     var target = evt.currentTarget;
@@ -283,11 +284,13 @@ var closePopUp = function () {
     drawMapCard(number);
     addListen();
     mapPin[number].removeEventListener(key, handler);
+
   };
 
   var pinClickHandler = function (evt) {
     closePopUpAuto();
     openPopUp(evt, 'click', pinClickHandler);
+    closePopUp();
   };
 
   var enterKeyDownHandler = function (evt) {
