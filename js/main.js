@@ -257,20 +257,25 @@ inputRoomNumber.addEventListener('click', function () {
   roomNumberClickHandler();
 });
 
-
 var addPinClickHandler = function () {
   var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-  // var closePopUp = function () {
-  //   var popUpActive = document.querySelector('.map__card .popup');
-  //   removeChild(popUpActive);
-  // };
-  //
-  // var escKeyDownHandler = function (evt) {
-  //   if (evt.keyCode === ESC_KEYCODE) {
-  //     closePopUp();
-  //   }
-  // };
+var closePopUpAuto = function () {
+    var map = document.querySelector('.map');
+    var popUp = document.querySelector('.map__card');
+    if (popUp) {
+      map.removeChild(popUp);
+    }
+
+};
+
+var closePopUp = function () {
+  var map = document.querySelector('.map');
+  var popUp = document.querySelector('.map__card');
+  var closeButton = popUp.querySelector('.popup__close');
+  closeButton.addEventListener('click', closePopUp);
+};
+
 
   var openPopUp = function (evt, key, handler) {
     var target = evt.currentTarget;
@@ -281,14 +286,8 @@ var addPinClickHandler = function () {
   };
 
   var pinClickHandler = function (evt) {
+    closePopUpAuto();
     openPopUp(evt, 'click', pinClickHandler);
-
-
-        var popUpActive = document.querySelector('.map__card');
-        console.log(popUpActive);
-        popUpActive.addEventListener('click', function () {
-          console.log('ok');
-        });
   };
 
   var enterKeyDownHandler = function (evt) {
