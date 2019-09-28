@@ -27,6 +27,12 @@ var NUMBERS_SEATS = {
   '3': [3, 2, 1],
   '100': [0]
 };
+var HOUSING_MIN_PRICES = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000
+};
 
 var mark = document.querySelector('.map__pin--main');
 var inputRoomNumber = document.querySelector('#room_number');
@@ -237,26 +243,6 @@ mark.addEventListener('mousedown', markClickHandler);
 
 mark.addEventListener('keydown', enterPressHandler);
 
-var roomNumberClickHandler = function () {
-  for (var i = 0; i < inputSeatsOption.length; i++) {
-    inputSeatsOption[i].disabled = true;
-  }
-  for (var j = 0; j < NUMBERS_SEATS[inputRoomNumber.value].length; j++) {
-    var number = NUMBERS_SEATS[inputRoomNumber.value][j];
-
-    for (var k = 0; k < inputSeatsOption.length; k++) {
-      var seat = inputSeatsOption[k].value;
-      if (String(number) === seat) {
-        inputSeatsOption[k].disabled = false;
-      }
-    }
-  }
-};
-
-inputRoomNumber.addEventListener('click', function () {
-  roomNumberClickHandler();
-});
-
 var addPinClickHandler = function () {
   var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
@@ -321,10 +307,33 @@ var addPinClickHandler = function () {
   addListen();
 };
 
+var roomNumberClickHandler = function () {
+  for (var i = 0; i < inputSeatsOption.length; i++) {
+    inputSeatsOption[i].disabled = true;
+  }
+  for (var j = 0; j < NUMBERS_SEATS[inputRoomNumber.value].length; j++) {
+    var number = NUMBERS_SEATS[inputRoomNumber.value][j];
+
+    for (var k = 0; k < inputSeatsOption.length; k++) {
+      var seat = inputSeatsOption[k].value;
+      if (String(number) === seat) {
+        inputSeatsOption[k].disabled = false;
+      }
+    }
+  }
+};
+
+inputRoomNumber.addEventListener('change', function () {
+  roomNumberClickHandler();
+});
+
 var validationInput = function () {
   var adsForm = document.querySelector('.ad-form');
   var inputTitle = adsForm.querySelector('#title');
   var inputPrice = adsForm.querySelector('#price');
+  var inputType = adsForm.querySelector('#type');
+  var inputTimeIn = adsForm.querySelector('#timein');
+  var inputTimeOut = adsForm.querySelector('#timeout');
 
   inputTitle.addEventListener('invalid', function () {
     if (inputTitle.validiti.tooShort) {
@@ -344,7 +353,28 @@ var validationInput = function () {
     }
   });
 
+  inputType.addEventListener('change', function (evt) {
+    inputPrice.placeholder = HOUSING_MIN_PRICES[evt.target.value];
+  });
+
+  inputTimeIn.addEventListener('change', function () {
+    inputTimeOut.value = inputTimeIn.value;
+  });
+
+  inputTimeOut.addEventListener('change', function () {
+    inputTimeIn.value = inputTimeOut.value;
+  });
 
 };
 
 validationInput();
+
+
+//
+// var getHousingMinPrices = function () {
+//   for (var i = 0; i < HOUSING_MIN_PRICES.length; i++) {
+//     inputPrice.value = HOUSING_MIN_PRICES[i];
+//     inputPrice.placeholder = HOUSING_MIN_PRICES[i];
+//     console.log(inputPrice.value);
+//   }
+// };
