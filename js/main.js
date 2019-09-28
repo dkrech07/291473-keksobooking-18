@@ -18,6 +18,7 @@ var TYPES_HOUSING_RU = {
   bungalo: 'Бунгало'
 };
 var ENTER_KEYCODE = 13;
+var ESC_KEYCODE = 27;
 var MARK_WIDTH = 62;
 var MARK_HEIGHT = 84;
 var NUMBERS_SEATS = {
@@ -104,7 +105,9 @@ var drawPins = function (adsList) {
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < adsList.length; i++) {
-    fragment.appendChild(renderPin(adsList[i]));
+    var pin = renderPin(adsList[i]);
+    pin.id = [i];
+    fragment.appendChild(pin);
   }
 
   return mapPins.appendChild(fragment);
@@ -186,9 +189,13 @@ var disableInput = function (input, status) {
   return inputs;
 };
 
-disableInput('fieldset', true);
-disableInput('select', true);
-disableInput('input', true);
+var disableAllInputs = function (status) {
+  disableInput('fieldset', status);
+  disableInput('select', status);
+  disableInput('input', status);
+};
+
+disableAllInputs(true);
 
 var getMarkPosition = function () {
   return {
@@ -209,14 +216,12 @@ var markClickHandler = function () {
 
   activateAdsForm();
 
-  disableInput('fieldset', false);
-  disableInput('select', false);
-  disableInput('input', false);
+  disableAllInputs(true);
 
   drawPins(createAds(ADS_NUMBER));
   drawMarkPosition(MARK_WIDTH / 2, MARK_HEIGHT);
 
-  drawMapCard(0);
+  addPinClickHandler();
 
   mark.removeEventListener('mousedown', markClickHandler);
   mark.removeEventListener('keydown', enterPressHandler);
@@ -251,3 +256,52 @@ var roomNumberClickHandler = function () {
 inputRoomNumber.addEventListener('click', function () {
   roomNumberClickHandler();
 });
+
+
+var addPinClickHandler = function () {
+  var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+  // var closePopUp = function () {
+  //   var popUpActive = document.querySelector('.map__card .popup');
+  //   removeChild(popUpActive);
+  // };
+  //
+  // var escKeyDownHandler = function (evt) {
+  //   if (evt.keyCode === ESC_KEYCODE) {
+  //     closePopUp();
+  //   }
+  // };
+
+  var openPopUp = function (evt, key, handler) {
+    var target = evt.currentTarget;
+    var number = target.id;
+    drawMapCard(number);
+    addListen();
+    mapPin[number].removeEventListener(key, handler);
+  };
+
+  var pinClickHandler = function (evt) {
+    openPopUp(evt, 'click', pinClickHandler);
+
+
+        var popUpActive = document.querySelector('.map__card');
+        console.log(popUpActive);
+        popUpActive.addEventListener('click', function () {
+          console.log('ok');
+        });
+  };
+
+  var enterKeyDownHandler = function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      openPopUp(evt, 'keydown', enterKeyDownHandler);
+    }
+  };
+
+  var addListen = function () {
+    for (var i = 0; i < mapPin.length; i++) {
+      mapPin[i].addEventListener('click', pinClickHandler);
+      mapPin[i].addEventListener('keydown', enterKeyDownHandler);
+    }
+  };
+  addListen();
+};
