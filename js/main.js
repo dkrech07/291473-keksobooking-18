@@ -216,7 +216,7 @@ var markClickHandler = function () {
 
   activateAdsForm();
 
-  disableAllInputs(true);
+  disableAllInputs(false);
 
   drawPins(createAds(ADS_NUMBER));
   drawMarkPosition(MARK_WIDTH / 2, MARK_HEIGHT);
@@ -260,23 +260,34 @@ inputRoomNumber.addEventListener('click', function () {
 var addPinClickHandler = function () {
   var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-var closePopUpAuto = function () {
+  var closePopUpAuto = function () {
     var map = document.querySelector('.map');
     var popUp = document.querySelector('.map__card');
     if (popUp) {
       map.removeChild(popUp);
     }
-};
+  };
 
-var closePopUp = function () {
+  var closePopUp = function () {
     var map = document.querySelector('.map');
     var popUp = document.querySelector('.map__card');
     var closeButton = popUp.querySelector('.popup__close');
-    closeButton.addEventListener('click', function () {
+    var removeElement = function () {
       map.removeChild(popUp);
       addListen();
+    };
+    closeButton.addEventListener('click', removeElement);
+    closeButton.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ENTER_KEYCODE) {
+        removeElement();
+      }
     });
-};
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        removeElement();
+      }
+    });
+  };
 
   var openPopUp = function (evt, key, handler) {
     var target = evt.currentTarget;
@@ -295,7 +306,9 @@ var closePopUp = function () {
 
   var enterKeyDownHandler = function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
+      closePopUpAuto();
       openPopUp(evt, 'keydown', enterKeyDownHandler);
+      closePopUp();
     }
   };
 
@@ -307,3 +320,31 @@ var closePopUp = function () {
   };
   addListen();
 };
+
+var validationInput = function () {
+  var adsForm = document.querySelector('.ad-form');
+  var inputTitle = adsForm.querySelector('#title');
+  var inputPrice = adsForm.querySelector('#price');
+
+  inputTitle.addEventListener('invalid', function () {
+    if (inputTitle.validiti.tooShort) {
+      inputTitle.setCustomValidity('Минимальная длина — 30 символов');
+    } else if (inputTitle.validiti.tooLong) {
+      inputTitle.setCustomValidity('Максимальная длина — 100 символов');
+    } else if (inputTitle.validiti.valueMissing) {
+      inputTitle.setCustomValidity('Обязательное поле');
+    }
+  });
+
+  inputPrice.addEventListener('invalid', function () {
+    if (inputPrice.validiti.tooLong) {
+      inputPrice.setCustomValidity('Максимальное значение — 1 000 000');
+    } else if (inputPrice.validiti.valueMissing) {
+      inputPrice.setCustomValidity('Обязательное поле');
+    }
+  });
+
+
+};
+
+validationInput();
