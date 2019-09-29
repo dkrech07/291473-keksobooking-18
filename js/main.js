@@ -246,55 +246,66 @@ mark.addEventListener('keydown', enterPressHandler);
 var addPinClickHandler = function () {
   var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-  var closePopUpAuto = function () {
-    var map = document.querySelector('.map');
-    var popUp = document.querySelector('.map__card');
-    if (popUp) {
-      map.removeChild(popUp);
-    }
-  };
-
-  var closePopUp = function () {
-    var map = document.querySelector('.map');
-    var popUp = document.querySelector('.map__card');
-    var closeButton = popUp.querySelector('.popup__close');
-    var removeElement = function () {
-      map.removeChild(popUp);
-      addListen();
-    };
-    closeButton.addEventListener('click', removeElement);
-    closeButton.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ENTER_KEYCODE) {
-        removeElement();
-      }
-    });
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        removeElement();
-      }
-    });
-  };
-
   var openPopUp = function (evt, key, handler) {
     var target = evt.currentTarget;
     var number = target.id;
     drawMapCard(number);
     addListen();
     mapPin[number].removeEventListener(key, handler);
+  };
 
+  var closeButtonClickHandler = function () {
+    var map = document.querySelector('.map');
+    var popUp = document.querySelector('.map__card');
+    if (popUp) {
+      map.removeChild(popUp);
+    }
+    addListen();
+  };
+
+  var closePopUpAuto = function () {
+    closeButtonClickHandler();
+  };
+
+  var closePopUpEsc = function () {
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        closeButtonClickHandler();
+      }
+    });
+  };
+
+  var closePopUpEnter = function () {
+    var popUp = document.querySelector('.map__card');
+    var closeButton = popUp.querySelector('.popup__close');
+    closeButton.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ENTER_KEYCODE) {
+        closeButtonClickHandler();
+      }
+    });
+  };
+
+  var closePopUpClick = function () {
+    var popUp = document.querySelector('.map__card');
+    var closeButton = popUp.querySelector('.popup__close');
+    closeButton.addEventListener('click', closeButtonClickHandler);
   };
 
   var pinClickHandler = function (evt) {
     closePopUpAuto();
     openPopUp(evt, 'click', pinClickHandler);
-    closePopUp();
+    closePopUpEsc();
+    closePopUpClick();
+    closePopUpEnter();
   };
 
   var enterKeyDownHandler = function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
       closePopUpAuto();
       openPopUp(evt, 'keydown', enterKeyDownHandler);
-      closePopUp();
+      closePopUpEsc();
+      closePopUpClick();
+      closePopUpEnter();
     }
   };
 
@@ -304,28 +315,9 @@ var addPinClickHandler = function () {
       mapPin[i].addEventListener('keydown', enterKeyDownHandler);
     }
   };
+
   addListen();
 };
-
-var roomNumberClickHandler = function () {
-  for (var i = 0; i < inputSeatsOption.length; i++) {
-    inputSeatsOption[i].disabled = true;
-  }
-  for (var j = 0; j < NUMBERS_SEATS[inputRoomNumber.value].length; j++) {
-    var number = NUMBERS_SEATS[inputRoomNumber.value][j];
-
-    for (var k = 0; k < inputSeatsOption.length; k++) {
-      var seat = inputSeatsOption[k].value;
-      if (String(number) === seat) {
-        inputSeatsOption[k].disabled = false;
-      }
-    }
-  }
-};
-
-inputRoomNumber.addEventListener('change', function () {
-  roomNumberClickHandler();
-});
 
 var validationInput = function () {
   var adsForm = document.querySelector('.ad-form');
@@ -334,6 +326,26 @@ var validationInput = function () {
   var inputType = adsForm.querySelector('#type');
   var inputTimeIn = adsForm.querySelector('#timein');
   var inputTimeOut = adsForm.querySelector('#timeout');
+
+  var roomNumberClickHandler = function () {
+    for (var i = 0; i < inputSeatsOption.length; i++) {
+      inputSeatsOption[i].disabled = true;
+    }
+    for (var j = 0; j < NUMBERS_SEATS[inputRoomNumber.value].length; j++) {
+      var number = NUMBERS_SEATS[inputRoomNumber.value][j];
+
+      for (var k = 0; k < inputSeatsOption.length; k++) {
+        var seat = inputSeatsOption[k].value;
+        if (String(number) === seat) {
+          inputSeatsOption[k].disabled = false;
+        }
+      }
+    }
+  };
+
+  inputRoomNumber.addEventListener('change', function () {
+    roomNumberClickHandler();
+  });
 
   inputTitle.addEventListener('invalid', function () {
     if (inputTitle.validiti.tooShort) {
@@ -368,13 +380,3 @@ var validationInput = function () {
 };
 
 validationInput();
-
-
-//
-// var getHousingMinPrices = function () {
-//   for (var i = 0; i < HOUSING_MIN_PRICES.length; i++) {
-//     inputPrice.value = HOUSING_MIN_PRICES[i];
-//     inputPrice.placeholder = HOUSING_MIN_PRICES[i];
-//     console.log(inputPrice.value);
-//   }
-// };
