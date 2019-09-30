@@ -18,6 +18,7 @@ var TYPES_HOUSING_RU = {
   bungalo: 'Бунгало'
 };
 var ENTER_KEYCODE = 13;
+var ESC_KEYCODE = 27;
 var MARK_WIDTH = 62;
 var MARK_HEIGHT = 84;
 var NUMBERS_SEATS = {
@@ -25,6 +26,12 @@ var NUMBERS_SEATS = {
   '2': [2, 1],
   '3': [3, 2, 1],
   '100': [0]
+};
+var HOUSING_MIN_PRICES = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000
 };
 
 var mark = document.querySelector('.map__pin--main');
@@ -104,7 +111,9 @@ var drawPins = function (adsList) {
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < adsList.length; i++) {
-    fragment.appendChild(renderPin(adsList[i]));
+    var pin = renderPin(adsList[i]);
+    pin.id = [i];
+    fragment.appendChild(pin);
   }
 
   return mapPins.appendChild(fragment);
@@ -186,9 +195,13 @@ var disableInput = function (input, status) {
   return inputs;
 };
 
-disableInput('fieldset', true);
-disableInput('select', true);
-disableInput('input', true);
+var disableAllInputs = function (status) {
+  disableInput('fieldset', status);
+  disableInput('select', status);
+  disableInput('input', status);
+};
+
+disableAllInputs(true);
 
 var getMarkPosition = function () {
   return {
@@ -209,14 +222,12 @@ var markClickHandler = function () {
 
   activateAdsForm();
 
-  disableInput('fieldset', false);
-  disableInput('select', false);
-  disableInput('input', false);
+  disableAllInputs(false);
 
   drawPins(createAds(ADS_NUMBER));
   drawMarkPosition(MARK_WIDTH / 2, MARK_HEIGHT);
 
-  drawMapCard(0);
+  addPinClickHandler();
 
   mark.removeEventListener('mousedown', markClickHandler);
   mark.removeEventListener('keydown', enterPressHandler);
@@ -232,22 +243,140 @@ mark.addEventListener('mousedown', markClickHandler);
 
 mark.addEventListener('keydown', enterPressHandler);
 
-var roomNumberClickHandler = function () {
-  for (var i = 0; i < inputSeatsOption.length; i++) {
-    inputSeatsOption[i].disabled = true;
-  }
-  for (var j = 0; j < NUMBERS_SEATS[inputRoomNumber.value].length; j++) {
-    var number = NUMBERS_SEATS[inputRoomNumber.value][j];
+var addPinClickHandler = function () {
+  var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-    for (var k = 0; k < inputSeatsOption.length; k++) {
-      var seat = inputSeatsOption[k].value;
-      if (String(number) === seat) {
-        inputSeatsOption[k].disabled = false;
-      }
+  var openPopUp = function (evt, key, handler) {
+    var target = evt.currentTarget;
+    var number = target.id;
+    drawMapCard(number);
+    addListen();
+    mapPin[number].removeEventListener(key, handler);
+  };
+
+  var closeButtonClickHandler = function () {
+    var map = document.querySelector('.map');
+    var popUp = document.querySelector('.map__card');
+    if (popUp) {
+      map.removeChild(popUp);
     }
-  }
+    addListen();
+  };
+
+  var closePopUpAuto = function () {
+    closeButtonClickHandler();
+  };
+
+  var closePopUpEsc = function () {
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        closeButtonClickHandler();
+      }
+    });
+  };
+
+  var closePopUpEnter = function () {
+    var popUp = document.querySelector('.map__card');
+    var closeButton = popUp.querySelector('.popup__close');
+    closeButton.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ENTER_KEYCODE) {
+        closeButtonClickHandler();
+      }
+    });
+  };
+
+  var closePopUpClick = function () {
+    var popUp = document.querySelector('.map__card');
+    var closeButton = popUp.querySelector('.popup__close');
+    closeButton.addEventListener('click', closeButtonClickHandler);
+  };
+
+  var pinClickHandler = function (evt) {
+    closePopUpAuto();
+    openPopUp(evt, 'click', pinClickHandler);
+    closePopUpEsc();
+    closePopUpClick();
+    closePopUpEnter();
+  };
+
+  var enterKeyDownHandler = function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      closePopUpAuto();
+      openPopUp(evt, 'keydown', enterKeyDownHandler);
+      closePopUpEsc();
+      closePopUpClick();
+      closePopUpEnter();
+    }
+  };
+
+  var addListen = function () {
+    for (var i = 0; i < mapPin.length; i++) {
+      mapPin[i].addEventListener('click', pinClickHandler);
+      mapPin[i].addEventListener('keydown', enterKeyDownHandler);
+    }
+  };
+
+  addListen();
 };
 
-inputRoomNumber.addEventListener('click', function () {
-  roomNumberClickHandler();
-});
+var validationInput = function () {
+  var adsForm = document.querySelector('.ad-form');
+  var inputTitle = adsForm.querySelector('#title');
+  var inputPrice = adsForm.querySelector('#price');
+  var inputType = adsForm.querySelector('#type');
+  var inputTimeIn = adsForm.querySelector('#timein');
+  var inputTimeOut = adsForm.querySelector('#timeout');
+
+  var roomNumberClickHandler = function () {
+    for (var i = 0; i < inputSeatsOption.length; i++) {
+      inputSeatsOption[i].disabled = true;
+    }
+    for (var j = 0; j < NUMBERS_SEATS[inputRoomNumber.value].length; j++) {
+      var number = NUMBERS_SEATS[inputRoomNumber.value][j];
+
+      for (var k = 0; k < inputSeatsOption.length; k++) {
+        var seat = inputSeatsOption[k].value;
+        if (String(number) === seat) {
+          inputSeatsOption[k].disabled = false;
+        }
+      }
+    }
+  };
+
+  inputRoomNumber.addEventListener('change', function () {
+    roomNumberClickHandler();
+  });
+
+  inputTitle.addEventListener('invalid', function () {
+    if (inputTitle.validiti.tooShort) {
+      inputTitle.setCustomValidity('Минимальная длина — 30 символов');
+    } else if (inputTitle.validiti.tooLong) {
+      inputTitle.setCustomValidity('Максимальная длина — 100 символов');
+    } else if (inputTitle.validiti.valueMissing) {
+      inputTitle.setCustomValidity('Обязательное поле');
+    }
+  });
+
+  inputPrice.addEventListener('invalid', function () {
+    if (inputPrice.validiti.tooLong) {
+      inputPrice.setCustomValidity('Максимальное значение — 1 000 000');
+    } else if (inputPrice.validiti.valueMissing) {
+      inputPrice.setCustomValidity('Обязательное поле');
+    }
+  });
+
+  inputType.addEventListener('change', function (evt) {
+    inputPrice.placeholder = HOUSING_MIN_PRICES[evt.target.value];
+  });
+
+  inputTimeIn.addEventListener('change', function () {
+    inputTimeOut.value = inputTimeIn.value;
+  });
+
+  inputTimeOut.addEventListener('change', function () {
+    inputTimeIn.value = inputTimeOut.value;
+  });
+
+};
+
+validationInput();
