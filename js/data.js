@@ -50,8 +50,8 @@
           },
 
           location: {
-            x: getRandomDouble(MIN_X, MAX_X),
-            y: getRandomDouble(MIN_Y, MAX_Y)
+            x: getRandomDouble(window.marker.MIN_X, window.marker.maxX),
+            y: getRandomDouble(window.marker.MIN_Y, window.marker.MAX_Y)
           }
         };
         adsArray.push(advert);
@@ -62,10 +62,6 @@
   };
 
   var TYPES_HOUSING = ['palace', 'flat', 'house', 'bungalo'];
-  var MIN_X = 1200;
-  var MAX_X = 0;
-  var MIN_Y = 130;
-  var MAX_Y = 630;
   var CHECKS_TIME = ['12:00', '13:00', '14:00'];
   var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var PHOTOS_LIST = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];

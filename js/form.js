@@ -51,12 +51,12 @@
 
   var getMarkPosition = function () {
     return {
-      x: window.map.mark.offsetLeft,
-      y: window.map.mark.offsetTop
+      x: window.marker.mark.offsetLeft,
+      y: window.marker.mark.offsetTop
     };
   };
 
-  window.form.drawMarkPosition(window.map.MARK_WIDTH / 2, window.map.MARK_WIDTH / 2);
+  window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_WIDTH / 2);
 
   var validationInput = function () {
     var adsForm = document.querySelector('.ad-form');
