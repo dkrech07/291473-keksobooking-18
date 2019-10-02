@@ -49,12 +49,12 @@
           markShiftCoords.x = window.marker.maxX - window.marker.MARK_WIDTH / 2;
         }
 
-        if (markShiftCoords.y < window.marker.MIN_Y) {
-          markShiftCoords.y = window.marker.MIN_Y;
+        if (markShiftCoords.y < window.marker.MIN_Y - window.marker.MARK_HEIGHT) {
+          markShiftCoords.y = window.marker.MIN_Y - window.marker.MARK_HEIGHT;
         }
 
-        if (markShiftCoords.y > window.marker.MAX_Y) {
-          markShiftCoords.y = window.marker.MAX_Y;
+        if (markShiftCoords.y > window.marker.MAX_Y - window.marker.MARK_HEIGHT) {
+          markShiftCoords.y = window.marker.MAX_Y - window.marker.MARK_HEIGHT;
         }
       };
 
