@@ -35,11 +35,35 @@
         y: moveEvt.clientY
       };
 
-      window.marker.mark.style.top = (window.marker.mark.offsetTop - shift.y) + 'px';
-      window.marker.mark.style.left = (window.marker.mark.offsetLeft - shift.x) + 'px';
+      var markShiftCoords = {
+        x: window.marker.mark.offsetLeft - shift.x,
+        y: window.marker.mark.offsetTop - shift.y
+      };
+
+      var getMoveLimits = function () {
+        if (markShiftCoords.x < window.marker.MIN_X - window.marker.MARK_WIDTH / 2) {
+          markShiftCoords.x = window.marker.MIN_X - window.marker.MARK_WIDTH / 2;
+        }
+
+        if (markShiftCoords.x > window.marker.maxX - window.marker.MARK_WIDTH / 2) {
+          markShiftCoords.x = window.marker.maxX - window.marker.MARK_WIDTH / 2;
+        }
+
+        if (markShiftCoords.y < window.marker.MIN_Y) {
+          markShiftCoords.y = window.marker.MIN_Y;
+        }
+
+        if (markShiftCoords.y > window.marker.MAX_Y) {
+          markShiftCoords.y = window.marker.MAX_Y;
+        }
+      };
+
+      getMoveLimits();
+
+      window.marker.mark.style.left = markShiftCoords.x + 'px';
+      window.marker.mark.style.top = markShiftCoords.y + 'px';
 
       window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_HEIGHT);
-
     };
 
     var onMouseUp = function (upEvt) {
@@ -47,6 +71,7 @@
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+      window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_HEIGHT);
 
       if (dragged) {
         var onClickPreventDefault = function (removeEvt) {
