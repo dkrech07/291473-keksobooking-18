@@ -71,6 +71,7 @@
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+
       window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_HEIGHT);
 
       if (dragged) {

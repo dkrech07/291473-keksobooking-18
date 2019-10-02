@@ -17,7 +17,6 @@
     window.form.disableAllInputs(false);
 
     window.drawPins(window.data.createAds(window.data.ADS_NUMBER));
-    window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_HEIGHT);
 
     addPinClickHandler();
 
