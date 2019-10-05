@@ -1,12 +1,6 @@
 'use strict';
 
 (function () {
-  window.map = {
-    MARK_WIDTH: 62,
-    mark: document.querySelector('.map__pin--main')
-  };
-
-  var MARK_HEIGHT = 84;
   var ENTER_KEYCODE = 13;
   var ESC_KEYCODE = 27;
 
@@ -23,12 +17,11 @@
     window.form.disableAllInputs(false);
 
     window.drawPins(window.data.createAds(window.data.ADS_NUMBER));
-    window.form.drawMarkPosition(window.map.MARK_WIDTH / 2, MARK_HEIGHT);
 
     addPinClickHandler();
 
-    window.map.mark.removeEventListener('mousedown', markClickHandler);
-    window.map.mark.removeEventListener('keydown', enterPressHandler);
+    window.marker.mark.removeEventListener('mousedown', markClickHandler);
+    window.marker.mark.removeEventListener('keydown', enterPressHandler);
   };
 
   var enterPressHandler = function (evt) {
@@ -37,9 +30,9 @@
     }
   };
 
-  window.map.mark.addEventListener('mousedown', markClickHandler);
+  window.marker.mark.addEventListener('mousedown', markClickHandler);
 
-  window.map.mark.addEventListener('keydown', enterPressHandler);
+  window.marker.mark.addEventListener('keydown', enterPressHandler);
 
   var addPinClickHandler = function () {
     var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
