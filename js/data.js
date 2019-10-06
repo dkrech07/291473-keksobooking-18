@@ -3,12 +3,6 @@
 (function () {
   window.data = {
     ADS_NUMBER: 8,
-    pinLoadHandler: function (pinList) {
-      window.drawPins(pinList);
-    },
-    errorHandler: function () {
-      console.log('error');
-    },
     renderPhotos: function (photos) {
       var template = document.querySelector('#card').content.querySelector('.popup__photos .popup__photo');
       var fragment = document.createDocumentFragment();
@@ -32,7 +26,39 @@
       }
 
       return fragment;
-    }
+    },
+    // createAds: function (ads) {
+    //   var adsArray = [];
+    //   for (var i = 0; i < ads; i++) {
+    //     var advert = {
+    //       author: {
+    //         avatar: 'img/avatars/user0' + (i + 1) + '.png'
+    //       },
+    //
+    //       offer: {
+    //         title: 'Заголовок объявления',
+    //         address: '600, 350',
+    //         price: 10000,
+    //         type: TYPES_HOUSING[getRandom(TYPES_HOUSING.length)],
+    //         rooms: 5,
+    //         guests: 6,
+    //         checkin: CHECKS_TIME[getRandom(CHECKS_TIME.length)],
+    //         checkout: CHECKS_TIME[getRandom(CHECKS_TIME.length)],
+    //         features: getRandomList(FEATURES_LIST),
+    //         description: 'строка с описанием',
+    //         photos: getRandomList(PHOTOS_LIST)
+    //       },
+    //
+    //       location: {
+    //         x: getRandomDouble(window.marker.MIN_X, window.marker.maxX),
+    //         y: getRandomDouble(window.marker.MIN_Y, window.marker.MAX_Y)
+    //       }
+    //     };
+    //     adsArray.push(advert);
+    //   }
+    //
+    //   return adsArray;
+    // }
   };
 
   var TYPES_HOUSING = ['palace', 'flat', 'house', 'bungalo'];

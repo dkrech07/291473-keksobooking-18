@@ -1,9 +1,9 @@
 'use strict';
 
 (function () {
-  window.drawMapCard = function (adsNumber) {
+  window.drawMapCard = function (cardList, adsNumber) {
     var fragment = document.createDocumentFragment();
-    fragment.appendChild(renderMapCard(window.data.createAds(window.data.ADS_NUMBER)[adsNumber]));
+    fragment.appendChild(renderMapCard(cardList[adsNumber]));
 
     return document.querySelector('.map .map__filters-container').before(fragment);
   };
