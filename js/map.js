@@ -15,14 +15,13 @@
     window.form.activateAdsForm();
 
     window.form.disableAllInputs(false);
-// >>> START
-    // Загрузка пинов с сервера;
+
     var loadHandler = function (adsList) {
-      window.drawPins(adsList); // Добаляю пины на карту;
+      window.drawPins(adsList);
 
-      var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)'); // Отлавливаю все пины, кроме большой метки;
+      var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-      var openPopUp = function (evt, key, handler) { // Отлавливаю клик по пину и открываю Карточку;
+      var openPopUp = function (evt, key, handler) {
         var target = evt.currentTarget;
         var number = target.id;
         window.drawMapCard(adsList, number);
@@ -93,7 +92,7 @@
       addListen();
 
     };
-// >>> END
+
     window.backend.load(loadHandler);
 
     window.marker.mark.removeEventListener('mousedown', markClickHandler);
@@ -109,5 +108,4 @@
   window.marker.mark.addEventListener('mousedown', markClickHandler);
 
   window.marker.mark.addEventListener('keydown', enterPressHandler);
-
 })();
