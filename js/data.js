@@ -26,6 +26,19 @@
       }
 
       return fragment;
+    },
+    errorHandler: function (errorMessage) {
+      var template = document.querySelector('#error').content.querySelector('.error');
+      var element = template.cloneNode(true);
+      var fragment = document.createDocumentFragment();
+
+      var node = document.createElement('p');
+      node.style = 'font-size: 30px; color: #ffffff;';
+      node.textContent = errorMessage;
+      element.appendChild(node);
+
+      fragment.appendChild(element);
+      document.querySelector('main').appendChild(fragment);
     }
   };
 })();

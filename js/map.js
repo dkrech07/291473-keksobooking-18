@@ -93,7 +93,7 @@
 
     };
 
-    window.backend.load(loadHandler);
+    window.backend.load(loadHandler, window.data.errorHandler);
 
     window.marker.mark.removeEventListener('mousedown', markClickHandler);
     window.marker.mark.removeEventListener('keydown', enterPressHandler);
