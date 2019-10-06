@@ -16,7 +16,7 @@
 
     window.form.disableAllInputs(false);
 
-    window.drawPins(window.data.createAds(window.data.ADS_NUMBER));
+    window.backend.load(window.data.pinLoadHandler, window.data.errorHandler);
 
     addPinClickHandler();
 
