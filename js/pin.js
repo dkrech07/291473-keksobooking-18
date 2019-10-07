@@ -6,9 +6,11 @@
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < adsList.length; i++) {
-      var pin = renderPin(adsList[i]);
-      pin.id = [i];
-      fragment.appendChild(pin);
+      if (adsList[i].offer) {
+        var pin = renderPin(adsList[i]);
+        pin.id = [i];
+        fragment.appendChild(pin);
+      }
     }
 
     return mapPins.appendChild(fragment);

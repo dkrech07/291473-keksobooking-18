@@ -27,59 +27,18 @@
 
       return fragment;
     },
-    createAds: function (ads) {
-      var adsArray = [];
-      for (var i = 0; i < ads; i++) {
-        var advert = {
-          author: {
-            avatar: 'img/avatars/user0' + (i + 1) + '.png'
-          },
+    errorHandler: function (errorMessage) {
+      var template = document.querySelector('#error').content.querySelector('.error');
+      var element = template.cloneNode(true);
+      var fragment = document.createDocumentFragment();
 
-          offer: {
-            title: 'Заголовок объявления',
-            address: '600, 350',
-            price: 10000,
-            type: TYPES_HOUSING[getRandom(TYPES_HOUSING.length)],
-            rooms: 5,
-            guests: 6,
-            checkin: CHECKS_TIME[getRandom(CHECKS_TIME.length)],
-            checkout: CHECKS_TIME[getRandom(CHECKS_TIME.length)],
-            features: getRandomList(FEATURES_LIST),
-            description: 'строка с описанием',
-            photos: getRandomList(PHOTOS_LIST)
-          },
+      var node = document.createElement('p');
+      node.style = 'font-size: 30px; color: #ffffff;';
+      node.textContent = errorMessage;
+      element.appendChild(node);
 
-          location: {
-            x: getRandomDouble(window.marker.MIN_X, window.marker.maxX),
-            y: getRandomDouble(window.marker.MIN_Y, window.marker.MAX_Y)
-          }
-        };
-        adsArray.push(advert);
-      }
-
-      return adsArray;
+      fragment.appendChild(element);
+      document.querySelector('main').appendChild(fragment);
     }
-  };
-
-  var TYPES_HOUSING = ['palace', 'flat', 'house', 'bungalo'];
-  var CHECKS_TIME = ['12:00', '13:00', '14:00'];
-  var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var PHOTOS_LIST = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-
-  var getRandom = function (number) {
-
-    return Math.floor(Math.random() * number);
-  };
-
-  var getRandomDouble = function (min, max) {
-
-    return Math.floor(Math.random() * (max - min) + min);
-  };
-
-  var getRandomList = function (array) {
-    var newArray = Array.from(array);
-    newArray.length = getRandom(array.length) + 1;
-
-    return newArray;
   };
 })();
