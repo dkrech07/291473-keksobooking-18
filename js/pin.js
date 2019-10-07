@@ -6,7 +6,7 @@
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < adsList.length; i++) {
-      if(adsList[i].offer){
+      if (adsList[i].offer) {
         var pin = renderPin(adsList[i]);
         pin.id = [i];
         fragment.appendChild(pin);

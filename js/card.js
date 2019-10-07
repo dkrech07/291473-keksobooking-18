@@ -62,7 +62,7 @@
     }
 
     removeChild(mapCard.querySelector('.popup__features'));
-    if(advertisement.offer.features && advertisement.offer.features.length > 0) {
+    if (advertisement.offer.features && advertisement.offer.features.length > 0) {
       mapCard.querySelector('.popup__features').appendChild(window.data.renderFeatures(advertisement.offer.features));
     } else {
       mapCard.querySelector('.popup__features').remove();
