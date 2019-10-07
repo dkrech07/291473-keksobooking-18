@@ -32,12 +32,19 @@
     mapCard.querySelector('.popup__text--capacity').textContent = advertisement.offer.rooms + ' комнаты для ' + advertisement.offer.guests + ' гостей';
     mapCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
     removeChild(mapCard.querySelector('.popup__features'));
-    mapCard.querySelector('.popup__features').appendChild(window.data.renderFeatures(advertisement.offer.features));
+    // mapCard.querySelector('.popup__features').appendChild(window.data.renderFeatures(advertisement.offer.features));
+
+    if(advertisement.offer.features.length) {
+      mapCard.querySelector('.popup__features').appendChild(window.data.renderFeatures(advertisement.offer.features));
+    } else {
+      mapCard.querySelector('.popup__features').remove();
+    }
+
+
     mapCard.querySelector('.popup__description').textContent = advertisement.offer.description;
     removeChild(mapCard.querySelector('.popup__photos'));
     mapCard.querySelector('.popup__photos').appendChild(window.data.renderPhotos(advertisement.offer.photos));
     mapCard.querySelector('.popup__avatar').src = advertisement.author.avatar;
-
     return mapCard;
   };
 })();
