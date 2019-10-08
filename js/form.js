@@ -132,6 +132,13 @@
   }
   tmpFillForm();
 
+  var resetInputs = function () {
+    var inputs = document.querySelectorAll('input');
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].value = '';
+    }
+  };
+
   var deactivateMap = function () {
     var map = document.querySelector('.map');
     map.classList.add('map--faded');
@@ -146,7 +153,7 @@
     window.form.disableAllInputs(true); // Деактивировал все поля формы;
     deactivateAdsForm(); // Деактивировал форму;
     deactivateMap(); // Деактивировал карту;
-
+    resetInputs();  // Сбрасываю записи в инпутах;
   };
 
   adsForm.addEventListener('submit', function (evt) {
