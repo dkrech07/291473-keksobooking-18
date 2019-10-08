@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var adsForm = document.querySelector('.ad-form');
 
   window.form = {
@@ -126,17 +127,51 @@
 
   // Отправка данных на сервер;
 
-  var tmpFillForm = function () { // Временное заполнение полей формы;
-    document.querySelector('#title').value = 'ТестовыйЗаголовокТестовыйЗаголовокТестовыйЗаголовок';
-    document.querySelector('#price').value = '1000';
-  }
-  tmpFillForm();
+  // var tmpFillForm = function () { // Временное заполнение полей формы;
+  //   document.querySelector('#title').value = 'ТестовыйЗаголовокТестовыйЗаголовокТестовыйЗаголовок';
+  //   document.querySelector('#price').value = '1000';
+  // }
+  // tmpFillForm();
 
   var resetInputs = function () {
-    var inputs = document.querySelectorAll('input');
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].value = '';
-    }
+    var resetCheckbox = function (input, condition) {
+      var inputs = document.querySelectorAll(input);
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].checked = condition;
+      }
+    };
+    resetCheckbox('input[name="features"]:checked', false);
+
+    var resetSelect = function (input, condition) {
+      var inputs = document.querySelectorAll(input);
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].selected = condition;
+      }
+    };
+    resetSelect('select > option', false);
+
+    // var resetInput = function (input, condition) {
+    //   var inputs = document.querySelectorAll(input);
+    //   for (var i = 0; i < inputs.length; i++) {
+    //     inputs[i].value = condition;
+    //   }
+    //   resetInput('input', '');
+
+
+    // var inputs = document.querySelectorAll('input');
+    // for (var i = 0; i < inputs.length; i++) {
+    //   inputs[i].value = '';
+    // }
+    // var checkbox = document.querySelectorAll('input[name="features"]:checked');
+    // for (var j = 0; j < checkbox.length; j++) {
+    //   checkbox[j].checked = false;
+    // }
+    //
+    // var select = document.querySelectorAll('option:selected');
+    // for (var k = 0; k < select.length; k++) {
+    //   select[k].selected = false;
+    //   select[k].desabled = false;
+    // }
   };
 
   var deactivateMap = function () {
@@ -148,12 +183,41 @@
     adsForm.classList.add('ad-form--disabled');
   };
 
-  var uploadHandler = function  () {
+  var removePins = function () {
+    var removablePins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < removablePins.length; i++) {
+      removablePins[i].remove();
+    }
+  };
+
+  var removeCard = function () {
+    var popUp = document.querySelector('.map__card');
+    if (popUp) {
+      popUp.remove();
+    }
+  };
+
+  var addMarkListeners = function () {
+    window.marker.mark.addEventListener('mousedown', window.map.markClickHandler);
+    window.marker.mark.addEventListener('keydown', window.map.enterPressHandler);
+  };
+
+  var resetMark = function () {
+    window.marker.mark.style.left = 570 + 'px';
+    window.marker.mark.style.top = 375 + 'px';
+    window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_WIDTH / 2);
+  };
+
+  var uploadHandler = function () {
     console.log('ok');
     window.form.disableAllInputs(true); // Деактивировал все поля формы;
     deactivateAdsForm(); // Деактивировал форму;
     deactivateMap(); // Деактивировал карту;
-    resetInputs();  // Сбрасываю записи в инпутах;
+    resetInputs(); // Сбрасываю записи в инпутах;
+    removePins(); // Удаляю пины с карты;
+    removeCard(); // Удаляю открытую карточку, при ее наличии;
+    addMarkListeners(); // Добавляю обработчики на маркер;
+    resetMark(); // Сбрасываю положение маркера к исходному, вывожу дефолтные координаты в поле адреса;
   };
 
   adsForm.addEventListener('submit', function (evt) {
