@@ -124,8 +124,29 @@
 
   validationInput();
 
+  // Отправка данных на сервер;
+
+  var tmpFillForm = function () { // Временное заполнение полей формы;
+    document.querySelector('#title').value = 'ТестовыйЗаголовокТестовыйЗаголовокТестовыйЗаголовок';
+    document.querySelector('#price').value = '1000';
+  }
+  tmpFillForm();
+
+  var deactivateMap = function () {
+    var map = document.querySelector('.map');
+    map.classList.add('map--faded');
+  };
+
+  var deactivateAdsForm = function () {
+    adsForm.classList.add('ad-form--disabled');
+  };
+
   var uploadHandler = function  () {
     console.log('ok');
+    window.form.disableAllInputs(true); // Деактивировал все поля формы;
+    deactivateAdsForm(); // Деактивировал форму;
+    deactivateMap(); // Деактивировал карту;
+
   };
 
   adsForm.addEventListener('submit', function (evt) {

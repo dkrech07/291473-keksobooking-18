@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var TIMEOUT_DURATION = 1000;
+  var TIMEOUT_DURATION = 5000;
   var STATUS_OK = 200;
 
   var handleErrors = function (xhr, load, error) {
