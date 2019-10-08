@@ -1,9 +1,10 @@
 'use strict';
 
 (function () {
+  var adsForm = document.querySelector('.ad-form');
+
   window.form = {
     activateAdsForm: function () {
-      var adsForm = document.querySelector('.ad-form');
       adsForm.classList.remove('ad-form--disabled');
     },
     disableAllInputs: function (status) {
@@ -59,7 +60,6 @@
   window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_WIDTH / 2);
 
   var validationInput = function () {
-    var adsForm = document.querySelector('.ad-form');
     var inputTitle = adsForm.querySelector('#title');
     var inputPrice = adsForm.querySelector('#price');
     var inputType = adsForm.querySelector('#type');
@@ -87,20 +87,24 @@
     });
 
     inputTitle.addEventListener('invalid', function () {
-      if (inputTitle.validiti.tooShort) {
+      if (inputTitle.validity.tooShort) {
         inputTitle.setCustomValidity('Минимальная длина — 30 символов');
-      } else if (inputTitle.validiti.tooLong) {
+      } else if (inputTitle.validity.tooLong) {
         inputTitle.setCustomValidity('Максимальная длина — 100 символов');
-      } else if (inputTitle.validiti.valueMissing) {
+      } else if (inputTitle.validity.valueMissing) {
         inputTitle.setCustomValidity('Обязательное поле');
+      } else {
+        inputTitle.setCustomValidity('');
       }
     });
 
     inputPrice.addEventListener('invalid', function () {
-      if (inputPrice.validiti.tooLong) {
+      if (inputPrice.validity.tooLong) {
         inputPrice.setCustomValidity('Максимальное значение — 1 000 000');
-      } else if (inputPrice.validiti.valueMissing) {
+      } else if (inputPrice.validity.valueMissing) {
         inputPrice.setCustomValidity('Обязательное поле');
+      } else {
+        inputPrice.setCustomValidity('');
       }
     });
 
@@ -119,4 +123,13 @@
   };
 
   validationInput();
+
+  var uploadHandler = function  () {
+    console.log('ok');
+  };
+
+  adsForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.upload(new FormData(adsForm), uploadHandler, window.data.errorHandler);
+  });
 })();
