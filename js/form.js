@@ -116,7 +116,7 @@
 
     inputType.addEventListener('change', function (evt) {
       inputPrice.placeholder = HOUSING_MIN_PRICES[evt.target.value];
-      inputPrice.max = HOUSING_MIN_PRICES[evt.target.value];
+      inputPrice.min = HOUSING_MIN_PRICES[evt.target.value];
     });
 
     inputTimeIn.addEventListener('change', function () {
@@ -130,12 +130,6 @@
   };
 
   validationInput();
-
-  var resetInputPlaceholder = function () {
-    var title = document.querySelector('input[name="title"]');
-    inputPrice.placeholder = HOUSING_MIN_PRICES.bungalo;
-  };
-  resetInputPlaceholder();
 
   var deactivateMap = function () {
     var map = document.querySelector('.map');
@@ -171,14 +165,30 @@
     window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_WIDTH / 2);
   };
 
+  var resetInputPlaceholder = function () {
+    inputPrice.placeholder = HOUSING_MIN_PRICES.bungalo;
+  };
+
   var generateSuccessMessage = function () {
     var element = document.querySelector('#success').content.querySelector('.success ');
     var successMessage = element.cloneNode(true);
-    document.querySelector('body').appendChild(successMessage);
-  }
+    document.querySelector('main').appendChild(successMessage);
+  };
 
-  var successMessageClickHandler = function (evt) {
+  var messageClickHandler = function () {
     document.querySelector('.success').remove();
+    removeClickHandler();
+  };
+
+  var messageKeyDownHandler = function (evt) {
+    if (evt.keyCode === window.ESC_KEYCODE) {
+      messageClickHandler();
+    }
+  };
+
+  var removeClickHandler = function () {
+    document.removeEventListener('click', messageClickHandler);
+    document.removeEventListener('keydown', messageKeyDownHandler);
   };
 
   var uploadHandler = function () {
@@ -191,6 +201,9 @@
     resetMark(); // Сбрасываю положение маркера к исходному, вывожу дефолтные координаты в поле адреса;
     resetInputPlaceholder(); // Сбрасываю плейсхолдер;
     generateSuccessMessage();
+
+    document.addEventListener('click', messageClickHandler);
+    document.addEventListener('keydown', messageKeyDownHandler);
   };
 
   adsForm.addEventListener('submit', function (evt) {
@@ -198,10 +211,4 @@
     window.backend.upload(new FormData(adsForm), uploadHandler, window.data.errorHandler);
   });
 
-  document.addEventListener('click', successMessageClickHandler);
-  document.addEventListener('keydown', function(evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        successMessageClickHandler();
-      }
-    });
 })();

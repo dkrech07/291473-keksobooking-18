@@ -2,7 +2,7 @@
 
 (function () {
   var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
+  window.window.ESC_KEYCODE = 27;
 
   var mapActivate = function () {
     var map = document.querySelector('.map');
@@ -44,7 +44,7 @@
 
         var closePopUpEsc = function () {
           document.addEventListener('keydown', function (evt) {
-            if (evt.keyCode === ESC_KEYCODE) {
+            if (evt.keyCode === window.ESC_KEYCODE) {
               closeButtonClickHandler();
             }
           });
