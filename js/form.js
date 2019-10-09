@@ -36,6 +36,7 @@
   var inputRoomNumber = document.querySelector('#room_number');
   var inputSeatsNumber = document.querySelector('#capacity');
   var inputSeatsOption = inputSeatsNumber.querySelectorAll('option');
+  var inputPrice = adsForm.querySelector('#price');
 
   var disableInput = function (input, status) {
     var inputs = document.querySelectorAll(input);
@@ -62,7 +63,6 @@
 
   var validationInput = function () {
     var inputTitle = adsForm.querySelector('#title');
-    var inputPrice = adsForm.querySelector('#price');
     var inputType = adsForm.querySelector('#type');
     var inputTimeIn = adsForm.querySelector('#timein');
     var inputTimeOut = adsForm.querySelector('#timeout');
@@ -127,12 +127,6 @@
 
   // Отправка данных на сервер;
 
-  // var tmpFillForm = function () { // Временное заполнение полей формы;
-  //   document.querySelector('#title').value = 'ТестовыйЗаголовокТестовыйЗаголовокТестовыйЗаголовок';
-  //   document.querySelector('#price').value = '1000';
-  // }
-  // tmpFillForm();
-
   var resetInputs = function () {
     var resetCheckbox = function (input, condition) {
       var inputs = document.querySelectorAll(input);
@@ -144,34 +138,37 @@
 
     var resetSelect = function (input, condition) {
       var inputs = document.querySelectorAll(input);
+      console.log(inputs);
       for (var i = 0; i < inputs.length; i++) {
         inputs[i].selected = condition;
       }
     };
     resetSelect('select > option', false);
 
-    // var resetInput = function (input, condition) {
-    //   var inputs = document.querySelectorAll(input);
-    //   for (var i = 0; i < inputs.length; i++) {
-    //     inputs[i].value = condition;
-    //   }
-    //   resetInput('input', '');
+    var resetNumberSeats = function () {
+      for (var i = 0; i < inputSeatsOption.length; i++) {
+        console.log(inputSeatsOption[i]);
+        inputSeatsOption[i].selected = false;
+        inputSeatsOption[i].disabled = false;
+      }
+      inputSeatsOption[NUMBERS_SEATS[2][0]].selected = true;
+    };
+    resetNumberSeats();
 
+    var resetTextInputs = function () {
+      var title = document.querySelector('input[name="title"]');
+      title.value = '';
+      inputPrice.value = '';
+      inputPrice.placeholder = HOUSING_MIN_PRICES.bungalo;
+    };
+    resetTextInputs();
 
-    // var inputs = document.querySelectorAll('input');
-    // for (var i = 0; i < inputs.length; i++) {
-    //   inputs[i].value = '';
-    // }
-    // var checkbox = document.querySelectorAll('input[name="features"]:checked');
-    // for (var j = 0; j < checkbox.length; j++) {
-    //   checkbox[j].checked = false;
-    // }
-    //
-    // var select = document.querySelectorAll('option:selected');
-    // for (var k = 0; k < select.length; k++) {
-    //   select[k].selected = false;
-    //   select[k].desabled = false;
-    // }
+    var resetDescription = function () {
+      var description = document.querySelector('#description');
+      description.value = '';
+    }
+    resetDescription();
+
   };
 
   var deactivateMap = function () {
