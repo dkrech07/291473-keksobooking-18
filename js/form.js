@@ -171,6 +171,16 @@
     window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_WIDTH / 2);
   };
 
+  var generateSuccessMessage = function () {
+    var element = document.querySelector('#success').content.querySelector('.success ');
+    var successMessage = element.cloneNode(true);
+    document.querySelector('body').appendChild(successMessage);
+  }
+
+  var successMessageClickHandler = function (evt) {
+    document.querySelector('.success').remove();
+  };
+
   var uploadHandler = function () {
     adsForm.reset(); // Сбрасываю данные формы;
     deactivateAdsForm(); // Деактивировал форму;
@@ -180,11 +190,18 @@
     addMarkListeners(); // Добавляю обработчики на маркер;
     resetMark(); // Сбрасываю положение маркера к исходному, вывожу дефолтные координаты в поле адреса;
     resetInputPlaceholder(); // Сбрасываю плейсхолдер;
-
+    generateSuccessMessage();
   };
 
   adsForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.upload(new FormData(adsForm), uploadHandler, window.data.errorHandler);
   });
+
+  document.addEventListener('click', successMessageClickHandler);
+  document.addEventListener('keydown', function(evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        successMessageClickHandler();
+      }
+    });
 })();
