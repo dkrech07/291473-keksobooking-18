@@ -2,6 +2,9 @@
 
 (function () {
 
+  var MARK_START_X = 570;
+  var MARK_START_Y = 375;
+
   var adsForm = document.querySelector('.ad-form');
 
   window.form = {
@@ -128,51 +131,11 @@
 
   validationInput();
 
-  // Отправка данных на сервер;
-
-  var resetInputs = function () {
-    var resetCheckbox = function (input, condition) {
-      var inputs = document.querySelectorAll(input);
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].checked = condition;
-      }
-    };
-    resetCheckbox('input[name="features"]:checked', false);
-
-    var resetSelect = function (input, condition) {
-      var inputs = document.querySelectorAll(input);
-      console.log(inputs);
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].selected = condition;
-      }
-    };
-    resetSelect('select > option', false);
-
-    var resetNumberSeats = function () {
-      for (var i = 0; i < inputSeatsOption.length; i++) {
-        console.log(inputSeatsOption[i]);
-        inputSeatsOption[i].selected = false;
-        inputSeatsOption[i].disabled = false;
-      }
-      inputSeatsOption[NUMBERS_SEATS[2][0]].selected = true;
-    };
-    resetNumberSeats();
-
-    var resetTextInputs = function () {
-      var title = document.querySelector('input[name="title"]');
-      title.value = '';
-      inputPrice.value = '';
-      inputPrice.placeholder = HOUSING_MIN_PRICES.bungalo;
-    };
-    resetTextInputs();
-
-    var resetDescription = function () {
-      var description = document.querySelector('#description');
-      description.value = '';
-    }
-    resetDescription();
-
+  var resetInputPlaceholder = function () {
+    var title = document.querySelector('input[name="title"]');
+    inputPrice.placeholder = HOUSING_MIN_PRICES.bungalo;
   };
+  resetInputPlaceholder();
 
   var deactivateMap = function () {
     var map = document.querySelector('.map');
@@ -203,21 +166,21 @@
   };
 
   var resetMark = function () {
-    window.marker.mark.style.left = 570 + 'px';
-    window.marker.mark.style.top = 375 + 'px';
+    window.marker.mark.style.left = MARK_START_X + 'px';
+    window.marker.mark.style.top = MARK_START_Y + 'px';
     window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_WIDTH / 2);
   };
 
   var uploadHandler = function () {
-    console.log('ok');
-    window.form.disableAllInputs(true); // Деактивировал все поля формы;
+    adsForm.reset(); // Сбрасываю данные формы;
     deactivateAdsForm(); // Деактивировал форму;
     deactivateMap(); // Деактивировал карту;
-    resetInputs(); // Сбрасываю записи в инпутах;
     removePins(); // Удаляю пины с карты;
     removeCard(); // Удаляю открытую карточку, при ее наличии;
     addMarkListeners(); // Добавляю обработчики на маркер;
     resetMark(); // Сбрасываю положение маркера к исходному, вывожу дефолтные координаты в поле адреса;
+    resetInputPlaceholder(); // Сбрасываю плейсхолдер;
+
   };
 
   adsForm.addEventListener('submit', function (evt) {
