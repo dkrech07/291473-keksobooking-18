@@ -39,6 +39,44 @@
 
       fragment.appendChild(element);
       document.querySelector('main').appendChild(fragment);
+
+      var error = document.querySelector('.error');
+      var errorButton = error.querySelector('.error__button');
+
+      var errorClickHandler = function () {
+        error.remove();
+        removeErrorClickHandler();
+      };
+
+      var errorKeyDownHandler = function (evt) {
+        if (evt.keyCode === window.ESC_KEYCODE) {
+          errorClickHandler();
+        }
+      };
+
+      var clickButtonHandler = function (evt) {
+        evt.preventDefault();
+        errorClickHandler();
+      };
+
+      var keyDownButtonHandler = function (evt) {
+        evt.preventDefault();
+        if (evt.keyCode === window.ENTER_KEYCODE) {
+          errorClickHandler();
+        }
+      };
+
+      error.addEventListener('click', errorClickHandler);
+      document.addEventListener('keydown', errorKeyDownHandler);
+      errorButton.addEventListener('click', clickButtonHandler);
+      errorButton.addEventListener('click', keyDownButtonHandler);
+
+      var removeErrorClickHandler = function () {
+        error.removeEventListener('click', errorClickHandler);
+        document.removeEventListener('keydown', errorKeyDownHandler);
+        errorButton.removeEventListener('click', clickButtonHandler);
+        errorButton.removeEventListener('click', keyDownButtonHandler);
+      };
     }
   };
 })();

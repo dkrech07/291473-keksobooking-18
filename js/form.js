@@ -81,6 +81,7 @@
           var seat = inputSeatsOption[k].value;
           if (String(number) === seat) {
             inputSeatsOption[k].disabled = false;
+            inputSeatsOption[k].selected = true;
           }
         }
       }
@@ -103,11 +104,7 @@
     });
 
     inputPrice.addEventListener('invalid', function () {
-      if (inputPrice.validity.tooShort) {
-        inputPrice.setCustomValidity('Минимальное значение');
-      } else if (inputPrice.validity.tooLong) {
-        inputPrice.setCustomValidity('Максимальное значение — 1 000 000');
-      } else if (inputPrice.validity.valueMissing) {
+      if (inputPrice.validity.valueMissing) {
         inputPrice.setCustomValidity('Обязательное поле');
       } else {
         inputPrice.setCustomValidity('');
@@ -115,8 +112,8 @@
     });
 
     inputType.addEventListener('change', function (evt) {
-      inputPrice.placeholder = HOUSING_MIN_PRICES[evt.target.value];
       inputPrice.min = HOUSING_MIN_PRICES[evt.target.value];
+      inputPrice.placeholder = HOUSING_MIN_PRICES[evt.target.value];
     });
 
     inputTimeIn.addEventListener('change', function () {
@@ -173,37 +170,39 @@
     var element = document.querySelector('#success').content.querySelector('.success ');
     var successMessage = element.cloneNode(true);
     document.querySelector('main').appendChild(successMessage);
-  };
 
-  var messageClickHandler = function () {
-    document.querySelector('.success').remove();
-    removeClickHandler();
-  };
+    var success = document.querySelector('.success');
 
-  var messageKeyDownHandler = function (evt) {
-    if (evt.keyCode === window.ESC_KEYCODE) {
-      messageClickHandler();
-    }
-  };
+    var messageClickHandler = function () {
+      success.remove();
+      removeClickHandler();
+    };
 
-  var removeClickHandler = function () {
-    document.removeEventListener('click', messageClickHandler);
-    document.removeEventListener('keydown', messageKeyDownHandler);
-  };
-
-  var uploadHandler = function () {
-    adsForm.reset(); // Сбрасываю данные формы;
-    deactivateAdsForm(); // Деактивировал форму;
-    deactivateMap(); // Деактивировал карту;
-    removePins(); // Удаляю пины с карты;
-    removeCard(); // Удаляю открытую карточку, при ее наличии;
-    addMarkListeners(); // Добавляю обработчики на маркер;
-    resetMark(); // Сбрасываю положение маркера к исходному, вывожу дефолтные координаты в поле адреса;
-    resetInputPlaceholder(); // Сбрасываю плейсхолдер;
-    generateSuccessMessage();
+    var messageKeyDownHandler = function (evt) {
+      if (evt.keyCode === window.ESC_KEYCODE) {
+        messageClickHandler();
+      }
+    };
 
     document.addEventListener('click', messageClickHandler);
     document.addEventListener('keydown', messageKeyDownHandler);
+
+    var removeClickHandler = function () {
+      success.removeEventListener('click', messageClickHandler);
+      document.removeEventListener('keydown', messageKeyDownHandler);
+    };
+  };
+
+  var uploadHandler = function () {
+    adsForm.reset();
+    deactivateAdsForm();
+    deactivateMap();
+    removePins();
+    removeCard();
+    addMarkListeners();
+    resetMark();
+    resetInputPlaceholder();
+    generateSuccessMessage();
   };
 
   adsForm.addEventListener('submit', function (evt) {
