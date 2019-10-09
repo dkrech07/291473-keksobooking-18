@@ -100,7 +100,9 @@
     });
 
     inputPrice.addEventListener('invalid', function () {
-      if (inputPrice.validity.tooLong) {
+      if (inputPrice.validity.tooShort) {
+        inputPrice.setCustomValidity('Минимальное значение');
+      } else if (inputPrice.validity.tooLong) {
         inputPrice.setCustomValidity('Максимальное значение — 1 000 000');
       } else if (inputPrice.validity.valueMissing) {
         inputPrice.setCustomValidity('Обязательное поле');
@@ -111,6 +113,7 @@
 
     inputType.addEventListener('change', function (evt) {
       inputPrice.placeholder = HOUSING_MIN_PRICES[evt.target.value];
+      inputPrice.max = HOUSING_MIN_PRICES[evt.target.value];
     });
 
     inputTimeIn.addEventListener('change', function () {
