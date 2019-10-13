@@ -109,15 +109,15 @@
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
           <select id="type" name="type">
-            <option value="bungalo">Бунгало</option>
-            <option value="flat" selected>Квартира</option>
+            <option value="bungalo" selected>Бунгало</option>
+            <option value="flat">Квартира</option>
             <option value="house">Дом</option>
             <option value="palace">Дворец</option>
           </select>
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <input id="price" name="price" type="number" placeholder="5000" max="1000000" required>
+          <input id="price" name="price" type="number" placeholder="0" max="1000000" required>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
@@ -144,9 +144,9 @@
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="capacity">Количество мест</label>
           <select id="capacity" name="capacity">
-            <option value="3" selected>для 3 гостей</option>
+            <option value="3">для 3 гостей</option>
             <option value="2">для 2 гостей</option>
-            <option value="1">для 1 гостя</option>
+            <option value="1" selected>для 1 гостя</option>
             <option value="0">не для гостей</option>
           </select>
         </fieldset>
@@ -244,7 +244,7 @@
   <template id="error">
     <div class="error">
       <p class="error__message">Ошибка загрузки объявления</p>
-      <button class="error__button" href="#">Попробовать снова</button>
+      <button class="error__button" href="#" tabindex="0">Попробовать снова</button>
     </div>
   </template>
 
@@ -252,8 +252,8 @@
   <script src="js/data.js"></script>
   <script src="js/pin.js"></script>
   <script src="js/marker.js"></script>
-  <script src="js/form.js"></script>
   <script src="js/map.js"></script>
+  <script src="js/form.js"></script>
   <script src="js/card.js"></script>
 </body>
 </html>

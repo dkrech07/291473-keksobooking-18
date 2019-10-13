@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var TIMEOUT_DURATION = 1000;
+  var TIMEOUT_DURATION = 5000;
   var STATUS_OK = 200;
 
   var handleErrors = function (xhr, load, error) {
@@ -48,5 +48,18 @@
       xhr.open('GET', URL);
       xhr.send();
     },
+    upload: function (data, onLoad, onError) {
+      var URL = 'https://js.dump.academy/keksobooking';
+
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
+
+      handleErrors(xhr, onLoad, onError);
+
+      xhr.timeout = TIMEOUT_DURATION;
+
+      xhr.open('POST', URL);
+      xhr.send(data);
+    }
   };
 })();
