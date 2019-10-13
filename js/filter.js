@@ -26,7 +26,9 @@
 
   window.filter = {
     limitPins: function (adsList) {
-      adsList.length = LIMIT_ADS;
+      if (adsList.length > LIMIT_ADS) {
+        adsList.length = LIMIT_ADS;
+      }
       return adsList;
     }
   };

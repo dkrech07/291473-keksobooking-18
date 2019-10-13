@@ -19,7 +19,9 @@
 
       var loadHandler = function (adsList) {
 
-        window.drawPins(adsList);
+        var adsCopy = adsList.slice();
+        window.filter.limitPins(adsCopy);
+        window.drawPins(adsCopy);
 
         var listeners = function () {
 
@@ -28,7 +30,7 @@
           var openPopUp = function (evt, key, handler) {
             var target = evt.currentTarget;
             var number = target.id;
-            window.drawMapCard(adsList, number);
+            window.drawMapCard(adsCopy, number);
             addListen();
             mapPins[number].removeEventListener(key, handler);
           };
@@ -91,7 +93,6 @@
             for (var i = 0; i < mapPins.length; i++) {
               mapPins[i].addEventListener('click', pinClickHandler);
               mapPins[i].addEventListener('keydown', enterKeyDownHandler);
-              console.log(mapPins[i]);
             }
           };
           addListen();
@@ -103,10 +104,11 @@
           var positiveArr = adsList.filter(function (item) {
             return item.offer.type === String(type);
           });
-          console.log(positiveArr);
+          var adsFiltered = positiveArr.slice();
           window.form.removePins();
           window.form.removeCard();
-          window.drawPins(positiveArr);
+          window.filter.limitPins(adsFiltered);
+          window.drawPins(adsFiltered);
           listeners();
         };
 
@@ -121,7 +123,7 @@
             }
           }
           if (currentOption === 'any') {
-            window.drawPins(adsList);
+            window.drawPins(adsCopy);
           } else {
             checkTypeHousing(currentOption);
           }
@@ -132,8 +134,6 @@
         };
 
         filterTypeHousing.addEventListener('click', getTypeHousingValue);
-
-        // window.filter.limitPins(adsList);
 
         //-------------------------------
       };
