@@ -23,7 +23,7 @@
         window.filter.limitPins(adsCopy);
         window.drawPins(adsCopy);
 
-        var listeners = function () {
+        var addListeners = function () {
 
           var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
@@ -97,19 +97,21 @@
           };
           addListen();
         };
-        listeners();
-        //-------------------------------
+
+        addListeners();
 
         var checkTypeHousing = function (type) {
+
           var positiveArr = adsList.filter(function (item) {
             return item.offer.type === String(type);
           });
+
           var adsFiltered = positiveArr.slice();
           window.form.removePins();
           window.form.removeCard();
           window.filter.limitPins(adsFiltered);
           window.drawPins(adsFiltered);
-          listeners();
+          addListeners();
         };
 
         var filter = document.querySelector('.map__filters-container');
@@ -117,11 +119,13 @@
         var typeHousingOptions = filterTypeHousing.querySelectorAll('option');
 
         var optionClickHandler = function (options) {
+
           for (var i = 0; i < options.length; i++) {
             if (options[i].selected === true) {
               var currentOption = options[i].value;
             }
           }
+
           if (currentOption === 'any') {
             window.drawPins(adsCopy);
           } else {
@@ -134,8 +138,6 @@
         };
 
         filterTypeHousing.addEventListener('click', getTypeHousingValue);
-
-        //-------------------------------
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
