@@ -28,41 +28,8 @@
         window.drawPins(adsCopy);
         window.map.addListeners(adsCopy);
 
-        var changeFilter = function (arrayFiltered) {
-          window.form.removePins();
-          window.form.removeCard();
-          window.filter.limitPins(arrayFiltered);
-          window.drawPins(arrayFiltered);
-          window.map.addListeners(arrayFiltered);
-        };
-
-        var checkTypeHousing = function (type) {
-
-          var positiveArr = adsList.filter(function (item) {
-            return item.offer.type === String(type);
-          });
-
-          var adsFiltered = positiveArr.slice();
-          changeFilter(adsFiltered);
-        };
-
-        var optionClickHandler = function (options) {
-
-          for (var i = 0; i < options.length; i++) {
-            if (options[i].selected === true) {
-              var currentOption = options[i].value;
-            }
-          }
-
-          if (currentOption === 'any') {
-            changeFilter(adsCopy);
-          } else {
-            checkTypeHousing(currentOption);
-          }
-        };
-
         var getTypeHousingValue = function () {
-          optionClickHandler(typeHousingOptions);
+          window.filter.optionClickHandler(typeHousingOptions, adsList, adsCopy);
         };
 
         filterTypeHousing.addEventListener('click', getTypeHousingValue);
