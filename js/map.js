@@ -23,14 +23,14 @@
         window.filter.limitPins(adsCopy);
         window.drawPins(adsCopy);
 
-        var addListeners = function () {
+        var addListeners = function (adsArray) {
 
           var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
           var openPopUp = function (evt, key, handler) {
             var target = evt.currentTarget;
             var number = target.id;
-            window.drawMapCard(adsCopy, number);
+            window.drawMapCard(adsArray, number);
             addListen();
             mapPins[number].removeEventListener(key, handler);
           };
@@ -98,7 +98,7 @@
           addListen();
         };
 
-        addListeners();
+        addListeners(adsCopy);
 
         var checkTypeHousing = function (type) {
 
@@ -111,7 +111,7 @@
           window.form.removeCard();
           window.filter.limitPins(adsFiltered);
           window.drawPins(adsFiltered);
-          addListeners();
+          addListeners(adsFiltered);
         };
 
         var filter = document.querySelector('.map__filters-container');
@@ -127,7 +127,11 @@
           }
 
           if (currentOption === 'any') {
+            window.form.removePins();
+            window.form.removeCard();
+            window.filter.limitPins(adsCopy);
             window.drawPins(adsCopy);
+            addListeners(adsCopy);
           } else {
             checkTypeHousing(currentOption);
           }
@@ -137,7 +141,7 @@
           optionClickHandler(typeHousingOptions);
         };
 
-        filterTypeHousing.addEventListener('click', getTypeHousingValue);
+        filterTypeHousing.addEventListener('mousedown', getTypeHousingValue);
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
