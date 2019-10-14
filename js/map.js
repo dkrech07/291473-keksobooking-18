@@ -12,13 +12,10 @@
   window.map = {
     markClickHandler: function () {
       mapActivate();
-
       window.form.activateAdsForm();
-
       window.form.disableAllInputs(false);
 
       var loadHandler = function (adsList) {
-
         var filter = document.querySelector('.map__filters-container');
         var filterTypeHousing = filter.querySelector('#housing-type');
         var typeHousingOptions = filterTypeHousing.querySelectorAll('option');
@@ -46,7 +43,6 @@
       }
     },
     addListeners: function (adsArray) {
-
       var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
       var openPopUp = function (evt, key, handler) {

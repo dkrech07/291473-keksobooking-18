@@ -25,7 +25,6 @@
       window.filter.changeFilter(adsFiltered);
     },
     optionClickHandler: function (options, arrayOriginal, arrayCopy) {
-
       for (var i = 0; i < options.length; i++) {
         if (options[i].selected === true) {
           var currentOption = options[i].value;
@@ -39,6 +38,5 @@
       }
     }
   };
-
 
 })();
