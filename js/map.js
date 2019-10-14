@@ -100,6 +100,14 @@
 
         addListeners(adsCopy);
 
+        var changeFilter = function (arrayFiltered) {
+          window.form.removePins();
+          window.form.removeCard();
+          window.filter.limitPins(arrayFiltered);
+          window.drawPins(arrayFiltered);
+          addListeners(arrayFiltered);
+        };
+
         var checkTypeHousing = function (type) {
 
           var positiveArr = adsList.filter(function (item) {
@@ -107,11 +115,7 @@
           });
 
           var adsFiltered = positiveArr.slice();
-          window.form.removePins();
-          window.form.removeCard();
-          window.filter.limitPins(adsFiltered);
-          window.drawPins(adsFiltered);
-          addListeners(adsFiltered);
+          changeFilter(adsFiltered);
         };
 
         var filter = document.querySelector('.map__filters-container');
@@ -127,11 +131,7 @@
           }
 
           if (currentOption === 'any') {
-            window.form.removePins();
-            window.form.removeCard();
-            window.filter.limitPins(adsCopy);
-            window.drawPins(adsCopy);
-            addListeners(adsCopy);
+            changeFilter(adsCopy);
           } else {
             checkTypeHousing(currentOption);
           }
@@ -141,7 +141,7 @@
           optionClickHandler(typeHousingOptions);
         };
 
-        filterTypeHousing.addEventListener('mousedown', getTypeHousingValue);
+        filterTypeHousing.addEventListener('click', getTypeHousingValue);
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
