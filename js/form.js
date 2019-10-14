@@ -19,6 +19,18 @@
     drawMarkPosition: function (width, height) {
       var inputAddress = document.querySelector('#address');
       inputAddress.value = (getMarkPosition().x + width) + ', ' + (getMarkPosition().y + height);
+    },
+    removePins: function () {
+      var removablePins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+      for (var i = 0; i < removablePins.length; i++) {
+        removablePins[i].remove();
+      }
+    },
+    removeCard: function () {
+      var popUp = document.querySelector('.map__card');
+      if (popUp) {
+        popUp.remove();
+      }
     }
   };
 
@@ -137,20 +149,6 @@
     adsForm.classList.add('ad-form--disabled');
   };
 
-  var removePins = function () {
-    var removablePins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    for (var i = 0; i < removablePins.length; i++) {
-      removablePins[i].remove();
-    }
-  };
-
-  var removeCard = function () {
-    var popUp = document.querySelector('.map__card');
-    if (popUp) {
-      popUp.remove();
-    }
-  };
-
   var addMarkListeners = function () {
     window.marker.mark.addEventListener('mousedown', window.map.markClickHandler);
     window.marker.mark.addEventListener('keydown', window.map.enterPressHandler);
@@ -197,8 +195,8 @@
     adsForm.reset();
     deactivateAdsForm();
     deactivateMap();
-    removePins();
-    removeCard();
+    window.form.removePins();
+    window.form.removeCard();
     addMarkListeners();
     resetMark();
     resetInputPlaceholder();
