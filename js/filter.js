@@ -10,6 +10,13 @@
       }
       return adsList;
     }
+    // changeFilter: function (arrayFiltered) {
+    //   window.form.removePins();
+    //   window.form.removeCard();
+    //   // window.filter.limitPins(arrayFiltered);
+    //   window.drawPins(arrayFiltered);
+    //   window.map.addListeners(arrayFiltered);
+    // };
   };
 
 
