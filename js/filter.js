@@ -26,6 +26,19 @@
       } else {
         checkTypeHousing(currentOption, adsList);
       }
+    },
+    getPriceValue: function (prices, adsList, arrayCopy) {
+      for (var i = 0; i < prices.length; i++) {
+        if (prices[i].selected === true) {
+          var currentOption = prices[i].value;
+        }
+      }
+      if (currentOption === 'any') {
+        changeFilter(arrayCopy);
+      } else {
+        // checkTypeHousing(currentOption, adsList);
+        console.log('price ok');
+      }
     }
   };
 
@@ -48,7 +61,15 @@
       return item.offer.type === String(type);
     });
 
-    changeFilter(positiveArr.slice());
+    changeFilter(positiveArr);
+  };
+
+  var checkPriceHousing = function (price, adsList) {
+    var positiveArr = adsList.filter(function (item) {
+      return item.offer.type === String(type);
+    });
+
+    changeFilter(positiveArr);
   };
 
 })();

@@ -20,6 +20,8 @@
         var filter = document.querySelector('.map__filters-container');
         var filterTypeHousing = filter.querySelector('#housing-type');
         var typeHousingOptions = filterTypeHousing.querySelectorAll('option');
+        var filterPrice = filter.querySelector('#housing-price');
+        var filterPriceOptions = filterPrice.querySelectorAll('option');
 
         // Служебные функция:
         // -копирует массив объектов; -Фильтрует компию массива объектов;
@@ -30,12 +32,18 @@
         window.map.addListeners(adsCopy);
 
         // Фильтрую пины по типу отеля;
-        var optionClickHandler = function () {
+        var typeHousingClickHandler = function () {
           window.filter.getTypeHousingValue(typeHousingOptions, adsList, adsCopy);
+        };
+        // Фильтрую пины по цене;
+        var priceClickHandler = function () {
+          window.filter.getPriceValue(filterPriceOptions, adsList, adsCopy);
         };
 
         // Обработчик клика по фильтру - тип отеля;
-        filterTypeHousing.addEventListener('click', optionClickHandler);
+        // Обработчик клика по фильтру - цена;
+        filterTypeHousing.addEventListener('click', typeHousingClickHandler);
+        filterPrice.addEventListener('click', priceClickHandler);
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
