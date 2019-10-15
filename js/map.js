@@ -16,19 +16,25 @@
       window.form.disableAllInputs(false);
 
       var loadHandler = function (adsList) {
+        // Отлавливаю фильтры и записываю их в переменные;
         var filter = document.querySelector('.map__filters-container');
         var filterTypeHousing = filter.querySelector('#housing-type');
         var typeHousingOptions = filterTypeHousing.querySelectorAll('option');
 
+        // Служебная функция:
+        //-копирует массив объектов; -Фильтрует компью массива объектов;
+        //-Рисует пины;-Добавляет обработчики на пины;
         var adsCopy = adsList.slice();
         window.filter.limitPins(adsCopy);
         window.drawPins(adsCopy);
         window.map.addListeners(adsCopy);
 
+        // Фильтрую пины по типу отеля;
         var getTypeHousingValue = function () {
           window.filter.optionClickHandler(typeHousingOptions, adsList, adsCopy);
         };
 
+        // Обработчик клика по фильтру - тип отеля;
         filterTypeHousing.addEventListener('click', getTypeHousingValue);
       };
 
