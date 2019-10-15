@@ -22,20 +22,20 @@
         var typeHousingOptions = filterTypeHousing.querySelectorAll('option');
 
         // Служебные функция:
-        //-копирует массив объектов; -Фильтрует компию массива объектов;
-        //-Рисует пины;-Добавляет обработчики на пины;
+        // -копирует массив объектов; -Фильтрует компию массива объектов;
+        // -Рисует пины;-Добавляет обработчики на пины;
         var adsCopy = adsList.slice();
         window.filter.limitPins(adsCopy);
         window.drawPins(adsCopy);
         window.map.addListeners(adsCopy);
 
         // Фильтрую пины по типу отеля;
-        var getTypeHousingValue = function () {
-          window.filter.optionClickHandler(typeHousingOptions, adsList, adsCopy);
+        var optionClickHandler = function () {
+          window.filter.getTypeHousingValue(typeHousingOptions, adsList, adsCopy);
         };
 
         // Обработчик клика по фильтру - тип отеля;
-        filterTypeHousing.addEventListener('click', getTypeHousingValue);
+        filterTypeHousing.addEventListener('click', optionClickHandler);
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
