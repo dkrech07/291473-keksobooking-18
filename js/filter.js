@@ -2,6 +2,8 @@
 
 (function () {
   var LIMIT_ADS = 5;
+  var MIN_PRICE = 10000;
+  var MAX_PRICE = 50000;
 
   window.filter = {
     // Задаю лимит на вывод 5 пинов на карте;
@@ -35,9 +37,12 @@
       }
       if (currentOption === 'any') {
         changeFilter(arrayCopy);
-      } else {
-        // checkTypeHousing(currentOption, adsList);
-        console.log('price ok');
+      } else if (currentOption === 'middle') {
+        checkPriceHousingMiddle(arrayCopy);
+      } else if (currentOption === 'low') {
+        checkPriceHousingLow(arrayCopy);
+      } else if (currentOption === 'high') {
+        checkPriceHousingHigh(arrayCopy);
       }
     }
   };
@@ -64,9 +69,25 @@
     changeFilter(positiveArr);
   };
 
-  var checkPriceHousing = function (price, adsList) {
+  var checkPriceHousingMiddle = function (adsList) {
     var positiveArr = adsList.filter(function (item) {
-      return item.offer.type === String(type);
+      return item.offer.price > MIN_PRICE && item.offer.price < MAX_PRICE;
+    });
+
+    changeFilter(positiveArr);
+  };
+
+  var checkPriceHousingLow = function (adsList) {
+    var positiveArr = adsList.filter(function (item) {
+      return item.offer.price < MIN_PRICE;
+    });
+
+    changeFilter(positiveArr);
+  };
+
+  var checkPriceHousingHigh = function (adsList) {
+    var positiveArr = adsList.filter(function (item) {
+      return item.offer.price > MAX_PRICE;
     });
 
     changeFilter(positiveArr);
