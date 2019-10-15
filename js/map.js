@@ -27,23 +27,23 @@
         // -копирует массив объектов; -Фильтрует компию массива объектов;
         // -Рисует пины;-Добавляет обработчики на пины;
         var adsCopy = adsList.slice();
-        window.filter.limitPins(adsCopy);
+        // window.filter.limitPins(adsCopy);
         window.drawPins(adsCopy);
         window.map.addListeners(adsCopy);
 
         // Фильтрую пины по типу отеля;
         var typeHousingClickHandler = function () {
-          window.filter.getTypeHousingValue(typeHousingOptions, adsList, adsCopy);
+          window.filter.getTypeHousingValue(typeHousingOptions, adsCopy);
         };
         // Фильтрую пины по цене;
         var priceClickHandler = function () {
-          window.filter.getPriceValue(filterPriceOptions, adsList, adsCopy);
+          window.filter.getPriceValue(filterPriceOptions, adsCopy);
         };
 
         // Обработчик клика по фильтру - тип отеля;
         // Обработчик клика по фильтру - цена;
-        filterTypeHousing.addEventListener('click', typeHousingClickHandler);
-        filterPrice.addEventListener('click', priceClickHandler);
+        filterTypeHousing.addEventListener('change', typeHousingClickHandler);
+        filterPrice.addEventListener('change', priceClickHandler);
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
