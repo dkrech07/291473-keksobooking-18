@@ -22,15 +22,6 @@
       window.drawPins(arrayFiltered);
       window.map.addListeners(arrayFiltered);
     },
-    // Проверяет массив объектов (копию или исходный?) на соответствие значению из фильтра - Тип жилья;
-    // Записывает сопадающие значения в новую переменную postiveArr;
-    checkTypeHousing: function (type, adsList) {
-      var positiveArr = adsList.filter(function (item) {
-        return item.offer.type === String(type);
-      });
-      var adsFiltered = positiveArr.slice();
-      window.filter.changeFilter(adsFiltered);
-    },
     // Срабатывает при клике на фильтр;
     // Проверяет выбранное значение в фильре и в зависимости от этого:
     // - выводит исходный массив (если выбраны все значения) - запускает функцию фильрации по checkTypeHousing, если выбрано конкретное значение;
@@ -44,9 +35,19 @@
       if (currentOption === 'any') {
         window.filter.changeFilter(arrayCopy);
       } else {
-        window.filter.checkTypeHousing(currentOption, arrayOriginal);
+        checkTypeHousing(currentOption, arrayOriginal);
       }
     }
+  };
+
+  // Проверяет массив объектов (копию или исходный?) на соответствие значению из фильтра - Тип жилья;
+  // Записывает сопадающие значения в новую переменную postiveArr;
+  var checkTypeHousing = function (type, adsList) {
+    var positiveArr = adsList.filter(function (item) {
+      return item.offer.type === String(type);
+    });
+    var adsFiltered = positiveArr.slice();
+    window.filter.changeFilter(adsFiltered);
   };
 
 })();

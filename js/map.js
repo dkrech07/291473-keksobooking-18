@@ -21,8 +21,8 @@
         var filterTypeHousing = filter.querySelector('#housing-type');
         var typeHousingOptions = filterTypeHousing.querySelectorAll('option');
 
-        // Служебная функция:
-        //-копирует массив объектов; -Фильтрует компью массива объектов;
+        // Служебные функция:
+        //-копирует массив объектов; -Фильтрует компию массива объектов;
         //-Рисует пины;-Добавляет обработчики на пины;
         var adsCopy = adsList.slice();
         window.filter.limitPins(adsCopy);
