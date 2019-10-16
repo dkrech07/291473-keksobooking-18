@@ -16,34 +16,32 @@
       window.form.disableAllInputs(false);
 
       var loadHandler = function (adsList) {
-        // Отлавливаю фильтры и записываю их в переменные;
-        var filter = document.querySelector('.map__filters-container');
-        var filterTypeHousing = filter.querySelector('#housing-type');
-        var typeHousingOptions = filterTypeHousing.querySelectorAll('option');
-        var filterPrice = filter.querySelector('#housing-price');
-        var filterPriceOptions = filterPrice.querySelectorAll('option');
 
-        // Служебные функция:
-        // -копирует массив объектов; -Фильтрует компию массива объектов;
-        // -Рисует пины;-Добавляет обработчики на пины;
-        var adsCopy = adsList.slice();
-        // window.filter.limitPins(adsCopy);
-        window.drawPins(adsCopy);
-        window.map.addListeners(adsCopy);
+        var mapFilters = document.querySelector('.map__filters');
+        var typeFilters = mapFilters.querySelector('#housing-type');
 
-        // Фильтрую пины по типу отеля;
-        var typeHousingClickHandler = function () {
-          window.filter.getTypeHousingValue(typeHousingOptions, adsCopy);
-        };
-        // Фильтрую пины по цене;
-        var priceClickHandler = function () {
-          window.filter.getPriceValue(filterPriceOptions, adsCopy);
+        var updatePins = function () {
+          var filtredAds = adsList;
+
+          if (typeFilters.value !== 'any') {
+            filtredAds = adsList.filter(function (it) {
+              return it.offer.type === typeFilters.value;
+            });
+          }
+
+          window.form.removePins();
+          window.form.removeCard();
+          window.drawPins(filtredAds);
+          window.map.addListeners(filtredAds);
         };
 
-        // Обработчик клика по фильтру - тип отеля;
-        // Обработчик клика по фильтру - цена;
-        filterTypeHousing.addEventListener('change', typeHousingClickHandler);
-        filterPrice.addEventListener('change', priceClickHandler);
+
+        var filtresHandler = function () {
+
+          updatePins();
+        };
+        mapFilters.addEventListener('change', filtresHandler);
+
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
