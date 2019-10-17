@@ -91,10 +91,16 @@
           showPins(filteredAds, limitPins);
         };
 
+        var DEBOUNCE_INTERVAL = 500;
 
         var filtresHandler = function () {
-
-          updatePins();
+          var lastTimeout = null;
+          if (lastTimeout) {
+            window.clearTimeout(lastTimeout);
+          }
+          lastTimeout = window.setTimeout(function () {
+            updatePins();
+          }, DEBOUNCE_INTERVAL);
         };
         mapFilters.addEventListener('change', filtresHandler);
 
