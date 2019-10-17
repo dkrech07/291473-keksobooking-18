@@ -16,6 +16,8 @@
       window.form.disableAllInputs(false);
 
       var loadHandler = function (adsList) {
+        window.drawPins(adsList);
+        window.map.addListeners(adsList);
 
         var PRICE_MIN = 10000;
         var PRICE_MAX = 50000;
@@ -23,18 +25,19 @@
         var mapFilters = document.querySelector('.map__filters');
         var typeFilters = mapFilters.querySelector('#housing-type');
         var priceFilters = mapFilters.querySelector('#housing-price');
+        var roomsFilters = mapFilters.querySelector('#housing-rooms');
 
         var updatePins = function () {
-          var filtredAds = adsList;
+          var filteredAds = adsList;
 
           if (typeFilters.value !== 'any') {
-            filtredAds = adsList.filter(function (it) {
+            filteredAds = adsList.filter(function (it) {
               return it.offer.type === typeFilters.value;
             });
           }
 
           if (priceFilters.value !== 'any') {
-            filtredAds = filtredAds.filter(function (it) {
+            filteredAds = filteredAds.filter(function (it) {
               if (priceFilters.value === 'low') {
                 return it.offer.price < PRICE_MIN;
               } else if (priceFilters.value === 'middle') {
@@ -46,10 +49,16 @@
             });
           }
 
+          if (roomsFilters.value !== 'any') {
+            filteredAds = filteredAds.filter(function (it) {
+              return it.offer.rooms === +roomsFilters.value;
+            });
+          }
+
           window.form.removePins();
           window.form.removeCard();
-          window.drawPins(filtredAds);
-          window.map.addListeners(filtredAds);
+          window.drawPins(filteredAds);
+          window.map.addListeners(filteredAds);
         };
 
 
