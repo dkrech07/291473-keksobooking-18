@@ -26,6 +26,7 @@
         var typeFilters = mapFilters.querySelector('#housing-type');
         var priceFilters = mapFilters.querySelector('#housing-price');
         var roomsFilters = mapFilters.querySelector('#housing-rooms');
+        var guestsFilters = mapFilters.querySelector('#housing-guests');
 
         var updatePins = function () {
           var filteredAds = adsList;
@@ -54,6 +55,13 @@
               return it.offer.rooms === +roomsFilters.value;
             });
           }
+
+          if (guestsFilters.value !== 'any') {
+          filteredAds = filteredAds.filter(function (it) {
+            return it.offer.guests === +guestsFilters.value;
+          });
+        }
+
 
           window.form.removePins();
           window.form.removeCard();
