@@ -1,11 +1,11 @@
 'use strict';
 
 (function () {
-  window.drawPins = function (adsList) {
+  window.drawPins = function (adsList, limitPins) {
     var mapPins = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < adsList.length; i++) {
+    for (var i = 0; i < limitPins; i++) {
       if (adsList[i].offer) {
         var pin = renderPin(adsList[i]);
         pin.id = [i];

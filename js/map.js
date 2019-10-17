@@ -16,73 +16,79 @@
       window.form.disableAllInputs(false);
 
       var loadHandler = function (adsList) {
-        window.drawPins(adsList);
-        window.map.addListeners(adsList);
 
-        var PRICE_MIN = 10000;
-        var PRICE_MAX = 50000;
+        var MIN_PRICE = 10000;
+        var MAX_PRICE = 50000;
+        var QUANTITY_PINS = 5;
+
+        var showPins = function (ads, limitPins) {
+          window.form.removePins();
+          window.form.removeCard();
+          window.drawPins(ads, limitPins);
+          window.map.addListeners(ads);
+        };
+
+        showPins(adsList, QUANTITY_PINS);
 
         var mapFilters = document.querySelector('.map__filters');
-        var typeFilters = mapFilters.querySelector('#housing-type');
-        var priceFilters = mapFilters.querySelector('#housing-price');
-        var roomsFilters = mapFilters.querySelector('#housing-rooms');
-        var guestsFilters = mapFilters.querySelector('#housing-guests');
-        var featuresFilters = mapFilters.querySelector('#housing-features');
+        var typeFilter = mapFilters.querySelector('#housing-type');
+        var priceFilter = mapFilters.querySelector('#housing-price');
+        var roomsFilter = mapFilters.querySelector('#housing-rooms');
+        var guestsFilter = mapFilters.querySelector('#housing-guests');
+        var featuresFilter = mapFilters.querySelector('#housing-features');
 
         var updatePins = function () {
           var filteredAds = adsList;
 
-          if (typeFilters.value !== 'any') {
+          if (typeFilter.value !== 'any') {
             filteredAds = adsList.filter(function (it) {
-              return it.offer.type === typeFilters.value;
+              return it.offer.type === typeFilter.value;
             });
           }
 
-          if (priceFilters.value !== 'any') {
+          if (priceFilter.value !== 'any') {
             filteredAds = filteredAds.filter(function (it) {
-              if (priceFilters.value === 'low') {
-                return it.offer.price < PRICE_MIN;
-              } else if (priceFilters.value === 'middle') {
-                return it.offer.price > PRICE_MIN && it.offer.price < PRICE_MAX;
-              } else if (priceFilters.value === 'high') {
-                return it.offer.price > PRICE_MAX;
+              if (priceFilter.value === 'low') {
+                return it.offer.price < MIN_PRICE;
+              } else if (priceFilter.value === 'middle') {
+                return it.offer.price > MIN_PRICE && it.offer.price < MAX_PRICE;
+              } else if (priceFilter.value === 'high') {
+                return it.offer.price > MAX_PRICE;
               }
               return it;
             });
           }
 
-          if (roomsFilters.value !== 'any') {
+          if (roomsFilter.value !== 'any') {
             filteredAds = filteredAds.filter(function (it) {
-              return it.offer.rooms === +roomsFilters.value;
+              return it.offer.rooms === +roomsFilter.value;
             });
           }
 
-          if (guestsFilters.value !== 'any') {
+          if (guestsFilter.value !== 'any') {
+            filteredAds = filteredAds.filter(function (it) {
+              return it.offer.guests === +guestsFilter.value;
+            });
+          }
+
+          var checkedFeatures = featuresFilter.querySelectorAll('input:checked');
+
+          var arrayFeatures = Array.from(checkedFeatures);
+          var valueFeatures = arrayFeatures.map(function (element) {
+            return element.value;
+          });
+
           filteredAds = filteredAds.filter(function (it) {
-            return it.offer.guests === +guestsFilters.value;
+            var count = 0;
+            valueFeatures.forEach(function (el) {
+              count += it.offer.features.indexOf(el) > -1 ? 1 : 0;
+
+            });
+            return count === valueFeatures.length;
           });
-        }
 
-        var checkedInputsFeatures = featuresFilters.querySelectorAll('input:checked');
-
-        var arrayInputsFeatures = Array.from(checkedInputsFeatures);
-        var valueInputsFeatures = arrayInputsFeatures.map(function (element) {
-          return element.value;
-        });
-
-        filteredAds = filteredAds.filter(function (it) {
-          var count = 0;
-          valueInputsFeatures.forEach(function (el) {
-            count += it.offer.features.indexOf(el) > -1 ? 1 : 0;
-
-          });
-          return count === valueInputsFeatures.length;
-        });
-
-          window.form.removePins();
-          window.form.removeCard();
-          window.drawPins(filteredAds);
-          window.map.addListeners(filteredAds);
+          var limitPins = filteredAds.length > QUANTITY_PINS ? QUANTITY_PINS : filteredAds.length;
+          showPins(filteredAds, limitPins);
         };
 
 
