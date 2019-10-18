@@ -88,6 +88,7 @@
         updatePins();
       }, DEBOUNCE_INTERVAL);
     };
+
     mapFilters.addEventListener('change', filtresHandler);
 
   };
