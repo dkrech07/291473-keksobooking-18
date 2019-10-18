@@ -16,20 +16,7 @@
       window.form.disableAllInputs(false);
 
       var loadHandler = function (adsList) {
-        var filter = document.querySelector('.map__filters-container');
-        var filterTypeHousing = filter.querySelector('#housing-type');
-        var typeHousingOptions = filterTypeHousing.querySelectorAll('option');
-
-        var adsCopy = adsList.slice();
-        window.filter.limitPins(adsCopy);
-        window.drawPins(adsCopy);
-        window.map.addListeners(adsCopy);
-
-        var getTypeHousingValue = function () {
-          window.filter.optionClickHandler(typeHousingOptions, adsList, adsCopy);
-        };
-
-        filterTypeHousing.addEventListener('click', getTypeHousingValue);
+        window.filterAds(adsList);
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
