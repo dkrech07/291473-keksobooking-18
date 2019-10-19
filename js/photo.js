@@ -10,7 +10,6 @@
   var photoFileChooser = document.querySelector('.ad-form__upload #images');
   var photoWrapper = document.querySelector('.ad-form__photo');
 
-
   avatarFileChooser.addEventListener('change', function () {
     var file = avatarFileChooser.files[0];
     var fileName = file.name.toLowerCase();
