@@ -6,10 +6,13 @@
   var MARK_START_Y = 375;
 
   var adsForm = document.querySelector('.ad-form');
+  var filterForm = document.querySelector('.map__filters');
+  filterForm.classList.add('ad-form--disabled');
 
   window.form = {
     activateAdsForm: function () {
       adsForm.classList.remove('ad-form--disabled');
+      filterForm.classList.remove('ad-form--disabled');
     },
     disableAllInputs: function (status) {
       disableInput('fieldset', status);
