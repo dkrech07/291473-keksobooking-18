@@ -5,8 +5,9 @@
   var HEIGHT_AVATAR = 70;
   var WIDTH_AVATAR = 70;
 
+  window.avatarPreview = document.querySelector('.ad-form-header__preview img');
+
   var avatarFileChooser = document.querySelector('.ad-form__field #avatar');
-  var avatarPreview = document.querySelector('.ad-form-header__preview img');
   var photoFileChooser = document.querySelector('.ad-form__upload #images');
   var photoWrapper = document.querySelector('.ad-form__photo');
 
@@ -22,7 +23,7 @@
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
-        avatarPreview.src = reader.result;
+        window.avatarPreview.src = reader.result;
       });
 
       reader.readAsDataURL(file);
@@ -39,6 +40,7 @@
 
     if (matches) {
       var newPhoto = photoWrapper.cloneNode(true);
+      newPhoto.classList.add('advertisement__photo');
       var photo = document.createElement('img');
       newPhoto.appendChild(photo);
       photo.style = 'width: ' + WIDTH_AVATAR + 'px;' + 'height: ' + HEIGHT_AVATAR + 'px;';

@@ -163,8 +163,21 @@
     window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_WIDTH / 2);
   };
 
+  var resetPhotos = function () {
+    window.avatarPreview.src = 'img/muffin-grey.svg';
+
+    var advertisementPhotos = document.querySelectorAll('.advertisement__photo');
+    if (advertisementPhotos.length > 0) {
+      for (var i = 0; i < advertisementPhotos.length; i++) {
+        advertisementPhotos[i].remove();
+      }
+    }
+  };
+
   var resetInputPlaceholder = function () {
     inputPrice.placeholder = HOUSING_MIN_PRICES.bungalo;
+    inputPrice.min = 0;
+    inputPrice.max = 1000000;
   };
 
   var generateSuccessMessage = function () {
@@ -204,6 +217,8 @@
     resetMark();
     resetInputPlaceholder();
     generateSuccessMessage();
+    resetPhotos();
+    window.form.disableAllInputs(true);
   };
 
   adsForm.addEventListener('submit', function (evt) {
