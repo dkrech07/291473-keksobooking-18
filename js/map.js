@@ -12,6 +12,7 @@
   window.map = {
     markClickHandler: function () {
       mapActivate();
+      window.form.addClearMap();
       window.form.activateAdsForm();
       window.form.disableAllInputs(false);
 

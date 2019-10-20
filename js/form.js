@@ -8,6 +8,7 @@
   var adsForm = document.querySelector('.ad-form');
   var filterForm = document.querySelector('.map__filters');
   filterForm.classList.add('ad-form--disabled');
+  var clearMap = adsForm.querySelector('.ad-form__reset');
 
   window.form = {
     activateAdsForm: function () {
@@ -34,6 +35,13 @@
       if (popUp) {
         popUp.remove();
       }
+    },
+    addClearMap: function () {
+      var clearMapClickHandler = function () {
+        resetMap();
+        clearMap.removeEventListener('click', clearMapClickHandler);
+      };
+      clearMap.addEventListener('click', clearMapClickHandler);
     }
   };
 
@@ -207,7 +215,7 @@
     };
   };
 
-  var uploadHandler = function () {
+  var resetMap = function () {
     adsForm.reset();
     deactivateAdsForm();
     deactivateMap();
@@ -216,9 +224,13 @@
     addMarkListeners();
     resetMark();
     resetInputPlaceholder();
-    generateSuccessMessage();
     resetPhotos();
     window.form.disableAllInputs(true);
+  };
+
+  var uploadHandler = function () {
+    resetMap();
+    generateSuccessMessage();
   };
 
   adsForm.addEventListener('submit', function (evt) {
