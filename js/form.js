@@ -36,7 +36,7 @@
         popUp.remove();
       }
     },
-    addClearMap: function () {
+    addClearMapListen: function () {
       var clearMapClickHandler = function () {
         resetMap();
         clearMap.removeEventListener('click', clearMapClickHandler);

@@ -11,16 +11,18 @@
 
   window.map = {
     markClickHandler: function () {
+
       mapActivate();
-      window.form.addClearMap();
-      window.form.activateAdsForm();
-      window.form.disableAllInputs(false);
 
       var loadHandler = function (adsList) {
         window.filterAds(adsList);
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
+
+      window.form.activateAdsForm();
+      window.form.disableAllInputs(false);
+      window.form.addClearMapListen();
 
       window.marker.mark.removeEventListener('mousedown', window.map.markClickHandler);
       window.marker.mark.removeEventListener('keydown', window.map.enterPressHandler);
