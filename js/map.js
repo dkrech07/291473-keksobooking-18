@@ -33,18 +33,30 @@
     addListeners: function (adsArray) {
       var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
+      var deactivatePin = function () {
+        var activePin = document.querySelector('.map__pin--active');
+        if (activePin) {
+          activePin.classList.remove('map__pin--active');
+        }
+      };
+
       var openPopUp = function (evt, key, handler) {
         var target = evt.currentTarget;
         var number = target.id;
         window.drawMapCard(adsArray, number);
         addListen();
         mapPins[number].removeEventListener(key, handler);
+
+        deactivatePin();
+        mapPins[number].classList.add('map__pin--active');
       };
 
       var closeButtonClickHandler = function () {
         var popUp = document.querySelector('.map__card');
         if (popUp) {
           popUp.remove();
+
+          deactivatePin();
         }
         addListen();
       };
