@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
+
   window.drawPins = function (adsList, limitPins) {
     var mapPins = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
@@ -15,9 +19,6 @@
 
     return mapPins.appendChild(fragment);
   };
-
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
 
   var renderPin = function (advertisement) {
     var template = document.querySelector('#pin').content.querySelector('.map__pin');

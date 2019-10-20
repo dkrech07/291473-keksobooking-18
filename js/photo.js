@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var HEIGHT_AVATAR = 70;
   var WIDTH_AVATAR = 70;

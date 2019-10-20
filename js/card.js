@@ -1,18 +1,19 @@
 'use strict';
 
 (function () {
-  window.drawMapCard = function (cardList, adsNumber) {
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(renderMapCard(cardList[adsNumber]));
-
-    return document.querySelector('.map .map__filters-container').before(fragment);
-  };
 
   var TYPES_HOUSING_RU = {
     palace: 'Дворец',
     flat: 'Квартира',
     house: 'Дом',
     bungalo: 'Бунгало',
+  };
+
+  window.drawMapCard = function (cardList, adsNumber) {
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(renderMapCard(cardList[adsNumber]));
+
+    return document.querySelector('.map .map__filters-container').before(fragment);
   };
 
   var removeChild = function (element) {

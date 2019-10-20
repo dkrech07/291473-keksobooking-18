@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var TIMEOUT_DURATION = 5000;
   var STATUS_OK = 200;
 

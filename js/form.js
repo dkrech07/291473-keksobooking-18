@@ -4,6 +4,18 @@
 
   var MARK_START_X = 570;
   var MARK_START_Y = 375;
+  var NUMBERS_SEATS = {
+    '1': [1],
+    '2': [2, 1],
+    '3': [3, 2, 1],
+    '100': [0]
+  };
+  var HOUSING_MIN_PRICES = {
+    bungalo: 0,
+    flat: 1000,
+    house: 5000,
+    palace: 10000
+  };
 
   var adsForm = document.querySelector('.ad-form');
   var filterForm = document.querySelector('.map__filters');
@@ -43,20 +55,6 @@
       };
       clearMap.addEventListener('click', clearMapClickHandler);
     }
-  };
-
-  var NUMBERS_SEATS = {
-    '1': [1],
-    '2': [2, 1],
-    '3': [3, 2, 1],
-    '100': [0]
-  };
-
-  var HOUSING_MIN_PRICES = {
-    bungalo: 0,
-    flat: 1000,
-    house: 5000,
-    palace: 10000
   };
 
   var inputRoomNumber = document.querySelector('#room_number');

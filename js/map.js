@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
+
   var ENTER_KEYCODE = 13;
-  window.window.ESC_KEYCODE = 27;
+  window.ESC_KEYCODE = 27;
 
   var mapActivate = function () {
     var map = document.querySelector('.map');
