@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
+
   var ENTER_KEYCODE = 13;
-  window.window.ESC_KEYCODE = 27;
+  window.ESC_KEYCODE = 27;
 
   var mapActivate = function () {
     var map = document.querySelector('.map');
@@ -11,15 +12,18 @@
 
   window.map = {
     markClickHandler: function () {
+
       mapActivate();
-      window.form.activateAdsForm();
-      window.form.disableAllInputs(false);
 
       var loadHandler = function (adsList) {
         window.filterAds(adsList);
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
+
+      window.form.activateAdsForm();
+      window.form.disableAllInputs(false);
+      window.form.addClearMapListen();
 
       window.marker.mark.removeEventListener('mousedown', window.map.markClickHandler);
       window.marker.mark.removeEventListener('keydown', window.map.enterPressHandler);
@@ -32,18 +36,30 @@
     addListeners: function (adsArray) {
       var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
+      var deactivatePin = function () {
+        var activePin = document.querySelector('.map__pin--active');
+        if (activePin) {
+          activePin.classList.remove('map__pin--active');
+        }
+      };
+
       var openPopUp = function (evt, key, handler) {
         var target = evt.currentTarget;
         var number = target.id;
         window.drawMapCard(adsArray, number);
         addListen();
         mapPins[number].removeEventListener(key, handler);
+
+        deactivatePin();
+        mapPins[number].classList.add('map__pin--active');
       };
 
       var closeButtonClickHandler = function () {
         var popUp = document.querySelector('.map__card');
         if (popUp) {
           popUp.remove();
+
+          deactivatePin();
         }
         addListen();
       };

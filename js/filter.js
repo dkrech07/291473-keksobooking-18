@@ -3,7 +3,6 @@
 (function () {
 
   window.filterAds = function (adsList) {
-
     var MIN_PRICE = 10000;
     var MAX_PRICE = 50000;
     var QUANTITY_PINS = 5;
@@ -90,8 +89,6 @@
     };
 
     mapFilters.addEventListener('change', filtresHandler);
-
   };
-
 
 })();

@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   window.marker = {
     MARK_WIDTH: 62,
     MARK_HEIGHT: 84,

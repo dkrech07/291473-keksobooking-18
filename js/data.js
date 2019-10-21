@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   window.data = {
     ADS_NUMBER: 8,
     renderPhotos: function (photos) {

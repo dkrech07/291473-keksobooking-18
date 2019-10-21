@@ -4,12 +4,28 @@
 
   var MARK_START_X = 570;
   var MARK_START_Y = 375;
+  var NUMBERS_SEATS = {
+    '1': [1],
+    '2': [2, 1],
+    '3': [3, 2, 1],
+    '100': [0]
+  };
+  var HOUSING_MIN_PRICES = {
+    bungalo: 0,
+    flat: 1000,
+    house: 5000,
+    palace: 10000
+  };
 
   var adsForm = document.querySelector('.ad-form');
+  var filterForm = document.querySelector('.map__filters');
+  filterForm.classList.add('ad-form--disabled');
+  var clearMap = adsForm.querySelector('.ad-form__reset');
 
   window.form = {
     activateAdsForm: function () {
       adsForm.classList.remove('ad-form--disabled');
+      filterForm.classList.remove('ad-form--disabled');
     },
     disableAllInputs: function (status) {
       disableInput('fieldset', status);
@@ -31,21 +47,14 @@
       if (popUp) {
         popUp.remove();
       }
+    },
+    addClearMapListen: function () {
+      var clearMapClickHandler = function () {
+        resetMap();
+        clearMap.removeEventListener('click', clearMapClickHandler);
+      };
+      clearMap.addEventListener('click', clearMapClickHandler);
     }
-  };
-
-  var NUMBERS_SEATS = {
-    '1': [1],
-    '2': [2, 1],
-    '3': [3, 2, 1],
-    '100': [0]
-  };
-
-  var HOUSING_MIN_PRICES = {
-    bungalo: 0,
-    flat: 1000,
-    house: 5000,
-    palace: 10000
   };
 
   var inputRoomNumber = document.querySelector('#room_number');
@@ -160,8 +169,21 @@
     window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_WIDTH / 2);
   };
 
+  var resetPhotos = function () {
+    window.avatarPreview.src = 'img/muffin-grey.svg';
+
+    var advertisementPhotos = document.querySelectorAll('.advertisement__photo');
+    if (advertisementPhotos.length > 0) {
+      for (var i = 0; i < advertisementPhotos.length; i++) {
+        advertisementPhotos[i].remove();
+      }
+    }
+  };
+
   var resetInputPlaceholder = function () {
     inputPrice.placeholder = HOUSING_MIN_PRICES.bungalo;
+    inputPrice.min = 0;
+    inputPrice.max = 1000000;
   };
 
   var generateSuccessMessage = function () {
@@ -191,7 +213,7 @@
     };
   };
 
-  var uploadHandler = function () {
+  var resetMap = function () {
     adsForm.reset();
     deactivateAdsForm();
     deactivateMap();
@@ -200,6 +222,12 @@
     addMarkListeners();
     resetMark();
     resetInputPlaceholder();
+    resetPhotos();
+    window.form.disableAllInputs(true);
+  };
+
+  var uploadHandler = function () {
+    resetMap();
     generateSuccessMessage();
   };
 
