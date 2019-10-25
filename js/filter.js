@@ -23,6 +23,7 @@
     var roomsFilter = mapFilters.querySelector('#housing-rooms');
     var guestsFilter = mapFilters.querySelector('#housing-guests');
     var featuresFilter = mapFilters.querySelector('#housing-features');
+    var uncheckedFeatures = document.querySelectorAll('.map__checkbox');
 
     var updatePins = function () {
       var filteredAds = adsList;
@@ -88,7 +89,29 @@
       }, DEBOUNCE_INTERVAL);
     };
 
+    var addFeaturesChecked = function () {
+      var checkboxClickHandler = function (evt) {
+        if (evt.srcElement.checked) {
+          evt.srcElement.checked = false;
+        } else {
+          evt.srcElement.checked = true;
+        }
+      };
+
+      for (var i = 0; i < uncheckedFeatures.length; i ++) {
+        uncheckedFeatures[i].addEventListener('keydown', function(evt) {
+          if (evt.keyCode === 13) {
+            checkboxClickHandler(evt);
+            filtresHandler();
+          }
+        });
+      }
+    };
+
     mapFilters.addEventListener('change', filtresHandler);
+
+    addFeaturesChecked();
+
   };
 
 })();
