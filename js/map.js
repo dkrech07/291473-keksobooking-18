@@ -15,6 +15,8 @@
 
       mapActivate();
 
+      window.form.checkSeatsOption();
+
       var loadHandler = function (adsList) {
         window.filterAds(adsList);
       };

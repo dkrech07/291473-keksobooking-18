@@ -54,6 +54,22 @@
         clearMap.removeEventListener('click', clearMapClickHandler);
       };
       clearMap.addEventListener('click', clearMapClickHandler);
+    },
+    checkSeatsOption: function () {
+      for (var i = 0; i < inputSeatsOption.length; i++) {
+        inputSeatsOption[i].disabled = true;
+      }
+      for (var j = 0; j < NUMBERS_SEATS[inputRoomNumber.value].length; j++) {
+        var number = NUMBERS_SEATS[inputRoomNumber.value][j];
+
+        for (var k = 0; k < inputSeatsOption.length; k++) {
+          var seat = inputSeatsOption[k].value;
+          if (String(number) === seat) {
+            inputSeatsOption[k].disabled = false;
+            inputSeatsOption[k].selected = true;
+          }
+        }
+      }
     }
   };
 
@@ -92,20 +108,7 @@
     var inputTimeOut = adsForm.querySelector('#timeout');
 
     var roomNumberClickHandler = function () {
-      for (var i = 0; i < inputSeatsOption.length; i++) {
-        inputSeatsOption[i].disabled = true;
-      }
-      for (var j = 0; j < NUMBERS_SEATS[inputRoomNumber.value].length; j++) {
-        var number = NUMBERS_SEATS[inputRoomNumber.value][j];
-
-        for (var k = 0; k < inputSeatsOption.length; k++) {
-          var seat = inputSeatsOption[k].value;
-          if (String(number) === seat) {
-            inputSeatsOption[k].disabled = false;
-            inputSeatsOption[k].selected = true;
-          }
-        }
-      }
+      window.form.checkSeatsOption();
     };
 
     inputRoomNumber.addEventListener('change', function () {
