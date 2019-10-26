@@ -232,6 +232,7 @@
   };
 
   var resetMap = function () {
+    window.filter.mapFilters.reset();
     adsForm.reset();
     deactivateAdsForm();
     deactivateMap();

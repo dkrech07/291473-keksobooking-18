@@ -5,6 +5,7 @@
   window.filter = {
     ENTER_KEYCODE: 13,
     ESC_KEYCODE: 27,
+    mapFilters: document.querySelector('.map__filters'),
     checkboxKeyDownHandler: function (evt) {
       if (evt.srcElement.checked) {
         evt.srcElement.checked = false;
@@ -37,12 +38,11 @@
 
       showPins(adsList, QUANTITY_PINS);
 
-      var mapFilters = document.querySelector('.map__filters');
-      var typeFilter = mapFilters.querySelector('#housing-type');
-      var priceFilter = mapFilters.querySelector('#housing-price');
-      var roomsFilter = mapFilters.querySelector('#housing-rooms');
-      var guestsFilter = mapFilters.querySelector('#housing-guests');
-      var featuresFilter = mapFilters.querySelector('#housing-features');
+      var typeFilter = window.filter.mapFilters.querySelector('#housing-type');
+      var priceFilter = window.filter.mapFilters.querySelector('#housing-price');
+      var roomsFilter = window.filter.mapFilters.querySelector('#housing-rooms');
+      var guestsFilter = window.filter.mapFilters.querySelector('#housing-guests');
+      var featuresFilter = window.filter.mapFilters.querySelector('#housing-features');
       var filterFeatures = document.querySelectorAll('.map__checkbox');
 
       var updatePins = function () {
@@ -109,7 +109,7 @@
         }, DEBOUNCE_INTERVAL);
       };
 
-      mapFilters.addEventListener('change', filtresHandler);
+      window.filter.mapFilters.addEventListener('change', filtresHandler);
       window.filter.addFeaturesCheck(filterFeatures, window.filter.checkboxKeyDownHandler);
       window.filter.addFeaturesCheck(filterFeatures, filtresHandler);
 
