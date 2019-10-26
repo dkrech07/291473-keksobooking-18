@@ -13,14 +13,14 @@
       }
     },
     addFeaturesCheck: function (features, callback) {
-      for (var i = 0; i < features.length; i++) {
-        features[i].addEventListener('keydown', function (evt) {
+      features.forEach(function (it) {
+        it.addEventListener('keydown', function (evt) {
           if (evt.keyCode === window.filter.ENTER_KEYCODE) {
             evt.preventDefault();
             callback(evt);
           }
         });
-      }
+      });
     },
     filterAds: function (adsList) {
       var MIN_PRICE = 10000;
