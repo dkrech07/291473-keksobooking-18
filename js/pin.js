@@ -9,13 +9,13 @@
     var mapPins = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < limitPins; i++) {
-      if (adsList[i].offer) {
-        var pin = renderPin(adsList[i]);
-        pin.id = [i];
+    adsList.forEach(function (it, i) {
+      if (it.offer && i < limitPins) {
+        var pin = renderPin(it);
+        pin.id = i;
         fragment.appendChild(pin);
       }
-    }
+    });
 
     return mapPins.appendChild(fragment);
   };

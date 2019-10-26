@@ -110,10 +110,10 @@
       };
 
       var addListen = function () {
-        for (var i = 0; i < mapPins.length; i++) {
-          mapPins[i].addEventListener('click', pinClickHandler);
-          mapPins[i].addEventListener('keydown', enterKeyDownHandler);
-        }
+        mapPins.forEach(function (it) {
+          it.addEventListener('click', pinClickHandler);
+          it.addEventListener('keydown', enterKeyDownHandler);
+        });
       };
       addListen();
     }
