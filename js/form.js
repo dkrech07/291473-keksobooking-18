@@ -102,12 +102,7 @@
 
   window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_WIDTH / 2);
 
-  var validationInput = function () {
-    var inputTitle = adsForm.querySelector('#title');
-    var inputType = adsForm.querySelector('#type');
-    var inputTimeIn = adsForm.querySelector('#timein');
-    var inputTimeOut = adsForm.querySelector('#timeout');
-
+  var validationSeatsOption = function () {
     var roomNumberClickHandler = function () {
       window.form.checkSeatsOption();
     };
@@ -115,6 +110,10 @@
     inputRoomNumber.addEventListener('change', function () {
       roomNumberClickHandler();
     });
+  };
+
+  var validationTitle = function () {
+    var inputTitle = adsForm.querySelector('#title');
 
     inputTitle.addEventListener('invalid', function () {
       if (inputTitle.validity.tooShort) {
@@ -127,7 +126,9 @@
         inputTitle.setCustomValidity('');
       }
     });
+  };
 
+  var validationPrice = function () {
     inputPrice.addEventListener('invalid', function () {
       if (inputPrice.validity.valueMissing) {
         inputPrice.setCustomValidity('Обязательное поле');
@@ -135,23 +136,34 @@
         inputPrice.setCustomValidity('');
       }
     });
+  };
+
+  var validationTypeHousing = function () {
+    var inputType = adsForm.querySelector('#type');
 
     inputType.addEventListener('change', function (evt) {
       inputPrice.min = HOUSING_MIN_PRICES[evt.target.value];
       inputPrice.placeholder = HOUSING_MIN_PRICES[evt.target.value];
     });
+  };
+
+  var synchronizationTimeInTimeOut = function () {
+    var inputTimeIn = adsForm.querySelector('#timein');
+    var inputTimeOut = adsForm.querySelector('#timeout');
 
     inputTimeIn.addEventListener('change', function () {
       inputTimeOut.value = inputTimeIn.value;
     });
-
     inputTimeOut.addEventListener('change', function () {
       inputTimeIn.value = inputTimeOut.value;
     });
-
   };
 
-  validationInput();
+  validationSeatsOption();
+  validationTitle();
+  validationPrice();
+  validationTypeHousing();
+  synchronizationTimeInTimeOut();
 
   window.filter.addFeaturesCheck(formFeatures, window.filter.checkboxKeyDownHandler);
 
