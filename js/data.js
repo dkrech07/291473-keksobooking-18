@@ -8,11 +8,11 @@
       var template = document.querySelector('#card').content.querySelector('.popup__photos .popup__photo');
       var fragment = document.createDocumentFragment();
 
-      for (var i = 0; i < photos.length; i++) {
+      photos.forEach(function (it) {
         var element = template.cloneNode(true);
-        element.src = photos[i];
+        element.src = it;
         fragment.appendChild(element);
-      }
+      });
 
       return fragment;
     },
@@ -21,10 +21,10 @@
       var element = template.cloneNode(true);
       var fragment = document.createDocumentFragment();
 
-      for (var i = 0; i < list.length; i++) {
-        var currentElement = element.querySelector('.popup__feature--' + list[i]);
+      list.forEach(function (it) {
+        var currentElement = element.querySelector('.popup__feature--' + it);
         fragment.appendChild(currentElement);
-      }
+      });
 
       return fragment;
     },
