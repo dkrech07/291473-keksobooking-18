@@ -21,7 +21,7 @@
   var filterForm = document.querySelector('.map__filters');
   filterForm.classList.add('ad-form--disabled');
   var clearMap = adsForm.querySelector('.ad-form__reset');
-  var uncheckedFormFeatures = adsForm.querySelectorAll('.feature__checkbox');
+  var formFeatures = adsForm.querySelectorAll('.feature__checkbox');
 
   window.form = {
     activateAdsForm: function () {
@@ -153,26 +153,7 @@
 
   validationInput();
 
-  var addFeaturesChecked = function () {
-    var checkboxClickHandler = function (evt) {
-      if (evt.srcElement.checked) {
-        evt.srcElement.checked = false;
-      } else {
-        evt.srcElement.checked = true;
-      }
-    };
-
-    for (var i = 0; i < uncheckedFormFeatures.length; i ++) {
-      uncheckedFormFeatures[i].addEventListener('keydown', function(evt) {
-        if (evt.keyCode === 13) {
-          evt.preventDefault();
-          checkboxClickHandler(evt);
-        }
-      });
-    }
-  };
-
-  addFeaturesChecked();
+  window.filter.addFeaturesCheck(formFeatures, window.filter.checkboxKeyDownHandler);
 
   var deactivateMap = function () {
     var map = document.querySelector('.map');
@@ -224,7 +205,7 @@
     };
 
     var messageKeyDownHandler = function (evt) {
-      if (evt.keyCode === window.ESC_KEYCODE) {
+      if (evt.keyCode === window.filter.ESC_KEYCODE) {
         messageClickHandler();
       }
     };

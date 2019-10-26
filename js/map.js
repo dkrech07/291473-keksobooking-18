@@ -2,9 +2,6 @@
 
 (function () {
 
-  var ENTER_KEYCODE = 13;
-  window.ESC_KEYCODE = 27;
-
   var mapActivate = function () {
     var map = document.querySelector('.map');
     map.classList.remove('map--faded');
@@ -18,7 +15,7 @@
       window.form.checkSeatsOption();
 
       var loadHandler = function (adsList) {
-        window.filterAds(adsList);
+        window.filter.filterAds(adsList);
       };
 
       window.backend.load(loadHandler, window.data.errorHandler);
@@ -31,7 +28,7 @@
       window.marker.mark.removeEventListener('keydown', window.map.enterPressHandler);
     },
     enterPressHandler: function (evt) {
-      if (evt.keyCode === ENTER_KEYCODE) {
+      if (evt.keyCode === window.filter.ENTER_KEYCODE) {
         window.map.markClickHandler();
       }
     },
@@ -72,7 +69,7 @@
 
       var closePopUpEsc = function () {
         document.addEventListener('keydown', function (evt) {
-          if (evt.keyCode === window.ESC_KEYCODE) {
+          if (evt.keyCode === window.filter.ESC_KEYCODE) {
             closeButtonClickHandler();
           }
         });
@@ -82,7 +79,7 @@
         var popUp = document.querySelector('.map__card');
         var closeButton = popUp.querySelector('.popup__close');
         closeButton.addEventListener('keydown', function (evt) {
-          if (evt.keyCode === ENTER_KEYCODE) {
+          if (evt.keyCode === window.filter.ENTER_KEYCODE) {
             closeButtonClickHandler();
           }
         });
@@ -103,7 +100,7 @@
       };
 
       var enterKeyDownHandler = function (evt) {
-        if (evt.keyCode === ENTER_KEYCODE) {
+        if (evt.keyCode === window.filter.ENTER_KEYCODE) {
           closePopUpAuto();
           openPopUp(evt, 'keydown', enterKeyDownHandler);
           closePopUpEsc();

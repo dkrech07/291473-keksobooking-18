@@ -50,7 +50,7 @@
       };
 
       var errorKeyDownHandler = function (evt) {
-        if (evt.keyCode === window.ESC_KEYCODE) {
+        if (evt.keyCode === window.filter.ESC_KEYCODE) {
           errorClickHandler();
         }
       };
@@ -62,7 +62,7 @@
 
       var keyDownButtonHandler = function (evt) {
         evt.preventDefault();
-        if (evt.keyCode === window.ENTER_KEYCODE) {
+        if (evt.keyCode === window.filter.ENTER_KEYCODE) {
           errorClickHandler();
         }
       };
