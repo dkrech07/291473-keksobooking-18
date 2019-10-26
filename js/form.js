@@ -39,9 +39,9 @@
     },
     removePins: function () {
       var removablePins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-      for (var i = 0; i < removablePins.length; i++) {
-        removablePins[i].remove();
-      }
+      removablePins.forEach(function (it) {
+        it.remove();
+      });
     },
     removeCard: function () {
       var popUp = document.querySelector('.map__card');
@@ -57,20 +57,19 @@
       clearMap.addEventListener('click', clearMapClickHandler);
     },
     checkSeatsOption: function () {
-      for (var i = 0; i < inputSeatsOption.length; i++) {
-        inputSeatsOption[i].disabled = true;
-      }
-      for (var j = 0; j < NUMBERS_SEATS[inputRoomNumber.value].length; j++) {
-        var number = NUMBERS_SEATS[inputRoomNumber.value][j];
-
-        for (var k = 0; k < inputSeatsOption.length; k++) {
-          var seat = inputSeatsOption[k].value;
+      inputSeatsOption.forEach(function (it) {
+        it.disabled = true;
+      });
+      NUMBERS_SEATS[inputRoomNumber.value].forEach(function (it) {
+        var number = it;
+        inputSeatsOption.forEach(function (item) {
+          var seat = item.value;
           if (String(number) === seat) {
-            inputSeatsOption[k].disabled = false;
-            inputSeatsOption[k].selected = true;
+            item.disabled = false;
+            item.selected = true;
           }
-        }
-      }
+        });
+      });
     }
   };
 
@@ -81,13 +80,14 @@
 
   var disableInput = function (input, status) {
     var inputs = document.querySelectorAll(input);
-    for (var i = 0; i < inputs.length; i++) {
+    inputs.forEach(function (it) {
       if (status) {
-        inputs[i].disabled = true;
+        it.disabled = true;
       } else {
-        inputs[i].disabled = false;
+        it.disabled = false;
       }
-    }
+    });
+
     return inputs;
   };
 
@@ -192,9 +192,9 @@
 
     var advertisementPhotos = document.querySelectorAll('.advertisement__photo');
     if (advertisementPhotos.length > 0) {
-      for (var i = 0; i < advertisementPhotos.length; i++) {
-        advertisementPhotos[i].remove();
-      }
+      advertisementPhotos.forEach(function (it) {
+        it.remove();
+      });
     }
   };
 
