@@ -6,21 +6,21 @@
     ENTER_KEYCODE: 13,
     ESC_KEYCODE: 27,
     mapFilters: document.querySelector('.map__filters'),
-    checkboxKeyDownHandler: function (evt) {
-      if (evt.srcElement.checked) {
-        evt.srcElement.checked = false;
-      } else {
-        evt.srcElement.checked = true;
+    filterFeatures: document.querySelectorAll('.map__checkbox'),
+    featuresKeyDownHandler: function (evt) {
+      if (evt.keyCode === window.filter.ENTER_KEYCODE) {
+        evt.preventDefault();
+        var target = evt.target;
+        if (target.checked === true) {
+          target.checked = false;
+        } else {
+          target.checked = true;
+        }
       }
     },
     addFeaturesCheck: function (features, callback) {
       features.forEach(function (it) {
-        it.addEventListener('keydown', function (evt) {
-          if (evt.keyCode === window.filter.ENTER_KEYCODE) {
-            evt.preventDefault();
-            callback(evt);
-          }
-        });
+        it.addEventListener('keydown', callback);
       });
     },
     filterAds: function (adsList) {
@@ -43,7 +43,6 @@
       var roomsFilter = window.filter.mapFilters.querySelector('#housing-rooms');
       var guestsFilter = window.filter.mapFilters.querySelector('#housing-guests');
       var featuresFilter = window.filter.mapFilters.querySelector('#housing-features');
-      var filterFeatures = document.querySelectorAll('.map__checkbox');
 
       var updatePins = function () {
         var filteredAds = adsList;
@@ -110,9 +109,8 @@
       };
 
       window.filter.mapFilters.addEventListener('change', filtresHandler);
-      window.filter.addFeaturesCheck(filterFeatures, window.filter.checkboxKeyDownHandler);
-      window.filter.addFeaturesCheck(filterFeatures, filtresHandler);
-
+      window.filter.addFeaturesCheck(window.filter.filterFeatures, window.filter.featuresKeyDownHandler);
+      window.filter.addFeaturesCheck(window.filter.filterFeatures, filtresHandler);
     }
   };
 

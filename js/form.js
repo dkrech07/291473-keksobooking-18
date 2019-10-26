@@ -165,7 +165,7 @@
   validationTypeHousing();
   synchronizationTimeInTimeOut();
 
-  window.filter.addFeaturesCheck(formFeatures, window.filter.checkboxKeyDownHandler);
+  window.filter.addFeaturesCheck(formFeatures, window.filter.featuresKeyDownHandler);
 
   var deactivateMap = function () {
     var map = document.querySelector('.map');
