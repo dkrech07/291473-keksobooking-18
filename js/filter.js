@@ -34,7 +34,6 @@
       });
     },
     filterAds: function (adsList) {
-
       showPins(adsList, QUANTITY_PINS);
       updatePins(adsList, QUANTITY_PINS);
 
@@ -67,7 +66,6 @@
   };
 
   var updatePins = function (adsList) {
-
     var typeFilter = window.filter.mapFilters.querySelector('#housing-type');
     var priceFilter = window.filter.mapFilters.querySelector('#housing-price');
     var roomsFilter = window.filter.mapFilters.querySelector('#housing-rooms');
