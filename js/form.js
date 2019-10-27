@@ -165,7 +165,7 @@
   validationTypeHousing();
   synchronizationTimeInTimeOut();
 
-  window.filter.addFeaturesCheck(formFeatures, window.filter.featuresKeyDownHandler);
+  window.filter.addFeaturesCheck(formFeatures, window.filter.featuresCheckHandler);
 
   var deactivateMap = function () {
     var map = document.querySelector('.map');
@@ -231,13 +231,7 @@
     };
   };
 
-  var removeFeaturesAllChecks = function () {
-    window.filter.removeFeaturesCheck(window.filter.filterFeatures, window.filter.featuresKeyDownHandler);
-    window.filter.removeFeaturesCheck(formFeatures, window.filter.featuresKeyDownHandler);
-  };
-
   var resetMap = function () {
-    removeFeaturesAllChecks();
     window.filter.mapFilters.reset();
     adsForm.reset();
     deactivateAdsForm();
