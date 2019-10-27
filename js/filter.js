@@ -66,7 +66,7 @@
     window.map.addListeners(ads);
   };
 
-  var updatePins = function (adsList, quantity) {
+  var updatePins = function (adsList) {
 
     var typeFilter = window.filter.mapFilters.querySelector('#housing-type');
     var priceFilter = window.filter.mapFilters.querySelector('#housing-price');
@@ -123,7 +123,7 @@
       return count === valueFeatures.length;
     });
 
-    var limitPins = filteredAds.length > quantity ? quantity : filteredAds.length;
+    var limitPins = filteredAds.length > QUANTITY_PINS ? QUANTITY_PINS : filteredAds.length;
     showPins(filteredAds, limitPins);
   };
 
