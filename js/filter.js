@@ -22,10 +22,10 @@
         }
       }
     },
-    featuresKeyDownHandler: function (evt, callback, adsList) {
+    featuresKeyDownHandler: function (evt, callback) {
       if (evt.keyCode === window.filter.ENTER_KEYCODE) {
         evt.preventDefault();
-        callback(adsList);
+        callback();
       }
     },
     addFeaturesCheck: function (features, callback) {
@@ -38,23 +38,24 @@
       showPins(adsList, QUANTITY_PINS);
       updatePins(adsList, QUANTITY_PINS);
 
+      var filtresHandler = function () {
+        var lastTimeout = null;
+        if (lastTimeout) {
+          window.clearTimeout(lastTimeout);
+        }
+        lastTimeout = window.setTimeout(function () {
+          updatePins(adsList, QUANTITY_PINS);
+        }, DEBOUNCE_INTERVAL);
+      };
+
       window.filter.mapFilters.addEventListener('change', function () {
-        window.filter.filtresHandler(adsList);
+        filtresHandler();
       });
       window.filter.addFeaturesCheck(window.filter.filterFeatures, window.filter.featuresCheckHandler);
 
       window.filter.addFeaturesCheck(window.filter.filterFeatures, function (evt) {
-        window.filter.featuresKeyDownHandler(evt, window.filter.filtresHandler, adsList);
+        window.filter.featuresKeyDownHandler(evt, filtresHandler);
       });
-    },
-    filtresHandler: function (adsList) {
-      var lastTimeout = null;
-      if (lastTimeout) {
-        window.clearTimeout(lastTimeout);
-      }
-      lastTimeout = window.setTimeout(function () {
-        updatePins(adsList, QUANTITY_PINS);
-      }, DEBOUNCE_INTERVAL);
     }
   };
 
