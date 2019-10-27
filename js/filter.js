@@ -23,6 +23,11 @@
         it.addEventListener('keydown', callback);
       });
     },
+    removeFeaturesCheck: function (features, callback) {
+      features.forEach(function (it) {
+        it.removeEventListener('keydown', callback);
+      });
+    },
     filterAds: function (adsList) {
       var MIN_PRICE = 10000;
       var MAX_PRICE = 50000;

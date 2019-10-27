@@ -231,7 +231,13 @@
     };
   };
 
+  var removeFeaturesAllChecks = function () {
+    window.filter.removeFeaturesCheck(window.filter.filterFeatures, window.filter.featuresKeyDownHandler);
+    window.filter.removeFeaturesCheck(formFeatures, window.filter.featuresKeyDownHandler);
+  };
+
   var resetMap = function () {
+    removeFeaturesAllChecks();
     window.filter.mapFilters.reset();
     adsForm.reset();
     deactivateAdsForm();
