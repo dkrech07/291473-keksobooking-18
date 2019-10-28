@@ -22,67 +22,118 @@
     }
   };
 
+  var renderCardTitle = function (advertisement, mapCard) {
+    var cardTitle = mapCard.querySelector('.popup__title');
+
+    if (advertisement.offer.title) {
+      cardTitle.textContent = advertisement.offer.title;
+    } else {
+      cardTitle.remove();
+    }
+  };
+
+  var renderCardAddress = function (advertisement, mapCard) {
+    var cardAddress = mapCard.querySelector('.popup__text--address');
+
+    if (advertisement.offer.address) {
+      cardAddress.textContent = advertisement.offer.address;
+    } else {
+      cardAddress.remove();
+    }
+  };
+
+  var renderCardPrice = function (advertisement, mapCard) {
+    var cardPrice = mapCard.querySelector('.popup__text--price');
+
+    if (advertisement.offer.price) {
+      cardPrice.textContent = advertisement.offer.price + '₽/ночь';
+    } else {
+      cardPrice.remove();
+    }
+  };
+
+  var renderCardTypeHousing = function (advertisement, mapCard) {
+    var cardTypeHousing = mapCard.querySelector('.popup__type');
+
+    if (advertisement.offer.type) {
+      cardTypeHousing.textContent = TYPES_HOUSING_RU[advertisement.offer.type];
+    } else {
+      cardTypeHousing.remove();
+    }
+  };
+
+  var renderCardRoomsForGuests = function (advertisement, mapCard) {
+    var cardRoomsForGuests = mapCard.querySelector('.popup__text--capacity');
+
+    if (advertisement.offer.rooms && advertisement.offer.guests) {
+      cardRoomsForGuests.textContent = advertisement.offer.rooms + ' комнаты для ' + advertisement.offer.guests + ' гостей';
+    } else {
+      cardRoomsForGuests.remove();
+    }
+  };
+
+  var renderCardCheckinCheckout = function (advertisement, mapCard) {
+    var cardCheckinCheckout = mapCard.querySelector('.popup__text--time');
+
+    if (advertisement.offer.checkin && advertisement.offer.checkout) {
+      cardCheckinCheckout.textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
+    } else {
+      cardCheckinCheckout.remove();
+    }
+  };
+
+  var renderCardFeatures = function (advertisement, mapCard) {
+    var cardFeatures = mapCard.querySelector('.popup__features');
+
+    removeChild(cardFeatures);
+    if (advertisement.offer.features && advertisement.offer.features.length > 0) {
+      cardFeatures.appendChild(window.data.renderFeatures(advertisement.offer.features));
+    } else {
+      cardFeatures.remove();
+    }
+  };
+
+  var renderCardDescription = function (advertisement, mapCard) {
+    var cardDesctiption = mapCard.querySelector('.popup__description');
+
+    if (advertisement.offer.description) {
+      cardDesctiption.textContent = advertisement.offer.description;
+    } else {
+      cardDesctiption.remove();
+    }
+  };
+
+  var renderCardPhotos = function (advertisement, mapCard) {
+    var cardPhotos = mapCard.querySelector('.popup__photos');
+
+    removeChild(cardPhotos);
+    if (advertisement.offer.photos && advertisement.offer.photos.length > 0) {
+      cardPhotos.appendChild(window.data.renderPhotos(advertisement.offer.photos));
+    } else {
+      cardPhotos.remove();
+    }
+  };
+
+  var renderCardAvatar = function (advertisement, mapCard) {
+    var cardAvatar = mapCard.querySelector('.popup__avatar');
+
+    cardAvatar.src = advertisement.author.avatar;
+  };
+
   var renderMapCard = function (advertisement) {
     var template = document.querySelector('#card').content.querySelector('.map__card');
     var mapCard = template.cloneNode(true);
 
-    if (advertisement.offer.title) {
-      mapCard.querySelector('.popup__title').textContent = advertisement.offer.title;
-    } else {
-      mapCard.querySelector('.popup__title').remove();
-    }
-
-    if (advertisement.offer.address) {
-      mapCard.querySelector('.popup__text--address').textContent = advertisement.offer.address;
-    } else {
-      mapCard.querySelector('.popup__text--address').remove();
-    }
-
-    if (advertisement.offer.price) {
-      mapCard.querySelector('.popup__text--price').textContent = advertisement.offer.price + '₽/ночь';
-    } else {
-      mapCard.querySelector('.popup__text--price').remove();
-    }
-
-    if (advertisement.offer.type) {
-      mapCard.querySelector('.popup__type').textContent = TYPES_HOUSING_RU[advertisement.offer.type];
-    } else {
-      mapCard.querySelector('.popup__type').remove();
-    }
-
-    if (advertisement.offer.rooms && advertisement.offer.guests) {
-      mapCard.querySelector('.popup__text--capacity').textContent = advertisement.offer.rooms + ' комнаты для ' + advertisement.offer.guests + ' гостей';
-    } else {
-      mapCard.querySelector('.popup__text--capacity').remove();
-    }
-
-    if (advertisement.offer.checkin && advertisement.offer.checkout) {
-      mapCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
-    } else {
-      mapCard.querySelector('.popup__text--time').remove();
-    }
-
-    removeChild(mapCard.querySelector('.popup__features'));
-    if (advertisement.offer.features && advertisement.offer.features.length > 0) {
-      mapCard.querySelector('.popup__features').appendChild(window.data.renderFeatures(advertisement.offer.features));
-    } else {
-      mapCard.querySelector('.popup__features').remove();
-    }
-
-    if (advertisement.offer.description) {
-      mapCard.querySelector('.popup__description').textContent = advertisement.offer.description;
-    } else {
-      mapCard.querySelector('.popup__description').remove();
-    }
-
-    removeChild(mapCard.querySelector('.popup__photos'));
-    if (advertisement.offer.photos && advertisement.offer.photos.length > 0) {
-      mapCard.querySelector('.popup__photos').appendChild(window.data.renderPhotos(advertisement.offer.photos));
-    } else {
-      mapCard.querySelector('.popup__photos').remove();
-    }
-
-    mapCard.querySelector('.popup__avatar').src = advertisement.author.avatar;
+    renderCardTitle(advertisement, mapCard);
+    renderCardAddress(advertisement, mapCard);
+    renderCardPrice(advertisement, mapCard);
+    renderCardTypeHousing(advertisement, mapCard);
+    renderCardRoomsForGuests(advertisement, mapCard);
+    renderCardCheckinCheckout(advertisement, mapCard);
+    renderCardFeatures(advertisement, mapCard);
+    renderCardDescription(advertisement, mapCard);
+    renderCardPhotos(advertisement, mapCard);
+    renderCardAvatar(advertisement, mapCard);
 
     return mapCard;
   };
