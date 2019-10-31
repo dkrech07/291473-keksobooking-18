@@ -15,11 +15,7 @@
       if (evt.keyCode === window.filter.ENTER_KEYCODE) {
         evt.preventDefault();
         var target = evt.target;
-        if (target.checked === true) {
-          target.checked = false;
-        } else {
-          target.checked = true;
-        }
+        target.checked = !target.checked;
       }
     },
     featuresKeyDownHandler: function (evt, callback) {
@@ -37,8 +33,8 @@
       showPins(adsList, QUANTITY_PINS);
       updatePins(adsList, QUANTITY_PINS);
 
+      var lastTimeout = null;
       var filtresHandler = function () {
-        var lastTimeout = null;
         if (lastTimeout) {
           window.clearTimeout(lastTimeout);
         }
