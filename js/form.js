@@ -81,11 +81,7 @@
   var disableInput = function (input, status) {
     var inputs = document.querySelectorAll(input);
     inputs.forEach(function (it) {
-      if (status) {
-        it.disabled = true;
-      } else {
-        it.disabled = false;
-      }
+      it.disabled = !!status;
     });
 
     return inputs;
@@ -102,7 +98,7 @@
 
   window.form.drawMarkPosition(window.marker.MARK_WIDTH / 2, window.marker.MARK_WIDTH / 2);
 
-  var validationSeatsOption = function () {
+  var validateSeatsOption = function () {
     var roomNumberClickHandler = function () {
       window.form.checkSeatsOption();
     };
@@ -112,7 +108,7 @@
     });
   };
 
-  var validationTitle = function () {
+  var validateTitle = function () {
     var inputTitle = adsForm.querySelector('#title');
 
     inputTitle.addEventListener('invalid', function () {
@@ -128,7 +124,7 @@
     });
   };
 
-  var validationPrice = function () {
+  var validatePrice = function () {
     inputPrice.addEventListener('invalid', function () {
       if (inputPrice.validity.valueMissing) {
         inputPrice.setCustomValidity('Обязательное поле');
@@ -138,7 +134,7 @@
     });
   };
 
-  var validationTypeHousing = function () {
+  var validateTypeHousing = function () {
     var inputType = adsForm.querySelector('#type');
 
     inputType.addEventListener('change', function (evt) {
@@ -147,7 +143,7 @@
     });
   };
 
-  var synchronizationTimeInTimeOut = function () {
+  var synchronizeTimeInTimeOut = function () {
     var inputTimeIn = adsForm.querySelector('#timein');
     var inputTimeOut = adsForm.querySelector('#timeout');
 
@@ -159,11 +155,11 @@
     });
   };
 
-  validationSeatsOption();
-  validationTitle();
-  validationPrice();
-  validationTypeHousing();
-  synchronizationTimeInTimeOut();
+  validateSeatsOption();
+  validateTitle();
+  validatePrice();
+  validateTypeHousing();
+  synchronizeTimeInTimeOut();
 
   window.filter.addFeaturesCheck(formFeatures, window.filter.featuresCheckHandler);
 

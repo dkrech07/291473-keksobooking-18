@@ -30,13 +30,10 @@
     handleErrors(xhr, load, error);
 
     xhr.timeout = TIMEOUT_DURATION;
-    if (data) {
-      xhr.open('POST', url);
-      xhr.send(data);
-    } else {
-      xhr.open('GET', url);
-      xhr.send();
-    }
+
+    var method = data ? 'POST' : 'GET';
+    xhr.open(method, url);
+    xhr.send(data);
   };
 
   window.backend = {

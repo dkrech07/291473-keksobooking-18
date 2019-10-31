@@ -9,7 +9,7 @@
     MIN_X: 0,
     maxX: document.querySelector('.map__overlay').offsetWidth,
     MIN_Y: 130,
-    MAX_Y: 630,
+    MAX_Y: 630
   };
 
   window.marker.mark.addEventListener('mousedown', function (evt) {
